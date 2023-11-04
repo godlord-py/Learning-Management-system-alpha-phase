@@ -1,0 +1,37 @@
+<!DOCTYPE html>  
+<html lang=" "en>
+    <head>
+        <meta charset = "UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+        <title>Educator Login</title>
+        <link rel="stylesheet" href="/css/styles.css">
+        <script src="https://cdn.tailwindcss.com"></script> 
+    </head>
+    <body> 
+        <div class = "grid grid-cols-6">
+            <div class = "col-start-3 col-span-2">  
+                <%- include('header.ejs')%>
+                <h6 class="py-4">Login as a Educator!</h6>
+                <form action="/users" method= "post">
+                    <div class = "py-3 " >
+                    <label for="Email">Email:</label>
+                    <input type = "email" name= "email" class = "border border-gray-900 text-gray-900 rounded p-4 w-full py-1" required>
+                    </div>
+                    <div class = "py-3 " >
+                    <label for="Password">Password:</label>
+                    <input type = "password" name= "password" class = "border border-gray-900 text-gray-900 rounded p-4 w-full py-1" required>
+                    </div>
+                    <div class = "py-3 " >
+                        <label for="id">Unique ID:</label>
+                        <input type = "id" name= "id" class = "border border-gray-900 text-gray-900 rounded p-4 w-full py-1" required>
+                        </div>
+                    <div class = "py-3 " >
+                    <button type = "submit" class = "px-5 py-1.5 rounded background-color: bg-red-600 text-white font-medium mr-2 mb-2">Login</button>
+                    </div>
+                </form>
+                <%- include ('footer.ejs') %>
+            </div>
+        </div>  
+    </body>
+</html>

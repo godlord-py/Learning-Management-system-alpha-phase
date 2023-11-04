@@ -13,19 +13,8 @@
             <div class = "col-start-3 col-span-2">  
                 <%- include('header.ejs')%>
                 <h6 class="py-4">Please Sign-in to your account</h6>
-                <form action="/users" method= "post">
-                    <div class = "py-3 " >
-                    <label for="Email">Email:</label>
-                    <input type = "email" name= "email" class = "border border-gray-900 text-grey-900 rounded p-4 w-full py-1" required>
-                    </div>
-                    <div class = "py-3 " >
-                    <label for="Password">Password:</label>
-                    <input type = "password" name= "password" class = "border border-gray-900 text-gray-900 rounded p-4 w-full py-1" required>
-                    </div>
-                    <div class = "py-3 " >
-                    <button type = "submit" class = "px-5 py-1.5 rounded background-color: bg-red-600 text-white font-medium mr-2 mb-2">Sign in</button>
-                    </div>
-                </form>
+                <p class="py-2">Login as an Educator: <a href = "/logine" class="text-green-600">Login Now</a></p>
+                <p class="py-2">Login as a Student: <a href = "/logins" class="text-green-600">Login Now</a></p>
                 <%- include ('footer.ejs') %>
         </div>  
     </body>
