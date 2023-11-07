@@ -4,7 +4,8 @@
         <meta charset = "UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
-        <title>Sign Up</title>
+        <meta name="csrf-token" content="<%= csrfToken %>">
+        <title>Login</title>
         <link rel="stylesheet" href="/css/styles.css">
         <script src="https://cdn.tailwindcss.com"></script> 
     </head>
@@ -12,17 +13,9 @@
         <div class = "grid grid-cols-6">
             <div class = "col-start-3 col-span-2">  
                 <%- include('header.ejs')%>
-                <h6 class="py-4">Sign-up as a new user</h6>
-                <p class="py-2 text-lg border-b-2 mb-2">Already have an account? <a href="/login" class="text-green-600 font-semibold hover:underline">Sign-in</a></p>
-                <form action="/users" method= "post">
-                    <div class = "py-3 " >
-                    <label for="First Name">First Name:</label>
-                    <input type = "text" name= "firstName" class = "border border-gray-900 text-gray-900 rounded p-4 w-full py-1" required>
-                    </div>
-                    <div class = "py-3 " >
-                    <label for="Last Name">Last Name:</label>
-                    <input type = "text" name= "lastName" class = "border border-gray-900 text-gray-900 rounded p-4 w-full py-1" required>
-                    </div>
+                <h6 class="py-4">Login</h6>
+                <form action="/logging" method= "post" autocomplete="on">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <div class = "py-3 " >
                     <label for="Email">Email:</label>
                     <input type = "email" name= "email" class = "border border-gray-900 text-gray-900 rounded p-4 w-full py-1" required>
@@ -31,8 +24,16 @@
                     <label for="Password">Password:</label>
                     <input type = "password" name= "password" class = "border border-gray-900 text-gray-900 rounded p-4 w-full py-1" required>
                     </div>
+                    <div class="py-2">
+                        <label for="type" class="text-gray-900 text-lg">Type:</label>
+                        <select name="role" id="role" class="border border-gray-300 rounded p-2 w-full text-gray-900 text-lg">
+                            <option value="null">Please select:</option>
+                            <option value="teacher">Teacher</option>
+                            <option value="student">Student</option>
+                        </select>
+                    </div>
                     <div class = "py-3 " >
-                    <button type = "submit" class = "px-5 py-1.5 rounded background-color: bg-red-600 text-white font-medium mr-2 mb-2">Sign up</button>
+                    <button type = "submit" class = "px-5 py-1.5 rounded background-color: bg-red-600 text-white font-medium mr-2 mb-2">Login</button>
                     </div>
                 </form>
                 <%- include ('footer.ejs') %>

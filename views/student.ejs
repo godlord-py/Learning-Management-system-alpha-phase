@@ -1,15 +1,46 @@
-<!DOCTYPE html>  
-<html lang=" "en>
-    <head>
-        <meta charset = "UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
-        <title>Student Portal/title>
-        <link rel="stylesheet" href="/css/styles.css">
-        <script src="https://cdn.tailwindcss.com"></script> 
-    </head>
-    <body> 
-        <div class= "grid-grid-cols-6">
-            <div class="col-start-3 col-span-2"></div>
-            <h1>Welcome <%= name %></h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= csrfToken %>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./css/styles.css" />
+    <title><%=title%></title>
+</head>
+<body>
+    <div class="grid grid-cols-4">
+        <div class="col-start-2 col-span-2">
+            <%- include ('header.ejs') %>
+            <div class="py-4 flex flex-col ml-6 mr-6 mt-3">
+                <div class="py-2 border-b-2 m-2" style="display: flex; justify-content: space-between;">
+                    <h1 class="text-black-600 text-xl font-semibold">Welcome, <br> Student: </h1>
+                    <a href="/signout" class="text-blue-600 text-xl font-semibold">Signout</a>
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
+                </div> 
+                <div class="border-b-2 m-1">
+                    <h1 class="text-xl font-bold text-black-600 mb-2"> 
+                        🚀Unlock Your Potential: Your Learning Adventure Begins Here!
+                    </h1>
+                    <p class="text-xl text-gray-700 m-3">
+                        Dive into a world of knowledge. Explore our diverse courses and embark on your journey to success.
+                    </p>                
+                </div>
+                <div class="m-2 flex flex-row justify-evenly">
+                    <a href="/Courses" class="bg-blue-600 text-white px-5 py-2 rounded font-medium hover:bg-blue-700 text-center block">
+                        My Enrolled Courses
+                    </a>
+                    <a href="/Password" class="bg-green-600 text-white px-5 py-2 rounded font-medium hover:bg-red-700 text-center block">
+                        Change Password
+                    </a>
+                </div>
+                <hr class="m-3">
+            </div>
+            
+            <!-- Display enrolled courses -->
+           
         </div>
+    </div>
+</body>
+</html>

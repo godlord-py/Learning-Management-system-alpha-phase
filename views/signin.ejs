@@ -1,9 +1,10 @@
 <!DOCTYPE html>  
 <html lang=" "en>
-    <head>
+    <head> 
         <meta charset = "UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+        <meta name="csrf-token" content="<%= csrfToken %>">
         <title>Sign-in</title>
         <link rel="stylesheet" href="/css/styles.css">
         <script src="https://cdn.tailwindcss.com"></script> 
@@ -13,8 +14,7 @@
             <div class = "col-start-3 col-span-2">  
                 <%- include('header.ejs')%>
                 <h6 class="py-4">Please Sign-in to your account</h6>
-                <p class="py-2">Login as an Educator: <a href = "/logine" class="text-green-600">Login Now</a></p>
-                <p class="py-2">Login as a Student: <a href = "/logins" class="text-green-600">Login Now</a></p>
+                <p class="py-2">Login<a href = "/login" class="text-green-600">Login Now</a></p>
                 <%- include ('footer.ejs') %>
         </div>  
     </body>
