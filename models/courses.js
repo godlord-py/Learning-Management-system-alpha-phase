@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         })
     };
     static getCourses () {
-      return this.findAll();
+      return this.findAll()
     }
     static associate(models) {
       // define association here 

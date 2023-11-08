@@ -295,7 +295,7 @@ app.post(
         email: request.user.email,
       });
       response.redirect("/teacher");
-      console.log(courses);
+      // console.log(courses);
     } catch (error) {
       console.log(error);
       return response.status(422).json(error);

@@ -9,6 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
+    static userCourses (userId) {
+      return this.findAll({
+        where: {
+          userId,
+        },
+        include: ["userCourses"],
+      });
+    }
     static associate(models) {
       // define association here
       Users.hasMany(models.Courses, {
