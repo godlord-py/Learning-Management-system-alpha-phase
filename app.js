@@ -15,8 +15,7 @@ const flash = require("connect-flash");
 const LocalStrategy = require('passport-local');
 const {Users, Courses, Enrollments, Chapters} = require("./models");
 const connnectEnsureLogin = require("connect-ensure-login");
-const users = require("./models/users");
-const courses = require("./models/courses");
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.urlencoded({ extended: false }));
@@ -289,13 +288,13 @@ app.post(
       return response.redirect("/teacher");
     }
     try {
-      await Courses.create({
+      await Courses.addcourse({
         courseName: request.body.courseName,
         courseDescription: request.body.courseDescription,
         email: request.user.email,
       });
       response.redirect("/teacher");
-      // console.log(courses);
+      console.log(userCourses);
     } catch (error) {
       console.log(error);
       return response.status(422).json(error);
@@ -321,7 +320,7 @@ app.get(
         currentUser,
         csrfToken: request.csrfToken(),
       });
-      console.log(courses);
+      // console.log(courses);
     } catch (error) {
       console.error(error);
       return response.status(500).json({ message: "Internal server error" });
