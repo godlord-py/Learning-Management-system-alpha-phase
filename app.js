@@ -251,7 +251,7 @@ app.post("/Password", async (request, response) => {
       request.flash("error", "User with that email does not exist.");
       return response.redirect("/Password");
     }
-    const hashedPwd = await bcrypt.hash(newPassword, saltRounds);
+    const hashedPwd = await bcrypt.hash(newPassword, 10);
     await user.update({ password: hashedPwd });
 
 
