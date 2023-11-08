@@ -17,10 +17,10 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.STRING,
     courseId: DataTypes.STRING,
     pageId: DataTypes.STRING,
-    completed: DataTypes.BOOLEAN
+    completed: DataTypes.BOOLEAN, 
   }, {
     sequelize,
-    modelName: 'Enrollments',
+    modelName: 'Enrollments', 
   });
   return Enrollments;
 };

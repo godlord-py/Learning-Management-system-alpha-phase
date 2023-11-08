@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= csrfToken %>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>
+        <%= title %>
+    </title>
+</head>
+
+<body class="bg-gray-100">
+    <div class="container mx-auto py-6">
+        <% include ('header.ejs') %>
+            <div class="p-6 bg-gray-100 rounded-lg shadow-lg">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-3xl font-semibold">View Reports</h2>
+                    <h1 class="text-xl font-semibold">
+                        <%= currentUser.firstName %>
+                            <%= currentUser.lastName %> <br> <a href="/signout"
+                                    class="text-green-600 text-lg font-semibold hover:text-green-800 transition-all">Signout</a>
+                    </h1>
+                </div>
+                <a href="/teacher"
+                    class="text-blue-600 text-sm font-semibold border-b-2 py-2 inline-block hover:text-blue-800 mb-6">Back
+                    to Dashboard</a>
+
+                <div class="bg-white p-6 rounded-lg shadow-sm mb-4">
+                    <p class="text-2xl font-semibold">Total Courses Created: <strong>
+                            <%= courses.length %>
+                        </strong></p>
+                </div>
+
+                <div class="mt-8">  
+                    <p class="text-2xl font-semibold mb-4">Courses with Enrollment:</p>
+                    <ul class="space-y-6">
+                        <% courses.forEach(course=> { %>
+                            <li>
+                                <div class="bg-white p-6 rounded-lg shadow-sm">
+                                    <p class="text-2xl font-semibold">Course:</p>
+                                    <p class="text-3xl font-bold mb-4">
+                                        <%= course.courseName %>
+                                    </p>
+                                    <p class="text-2xl font-semibold">Students Enrolled:</p>
+                                    <p class="text-3xl font-bold mb-4">
+                                      0
+                                    </p>
+                                 
+                                </div>
+                            </li>
+                            <% }); %>
+                    </ul>
+                </div>
+            </div>
+    </div>
+</body>
+
+</html>

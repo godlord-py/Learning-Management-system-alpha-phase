@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= csrfToken %>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>
+        <%= title %>
+    </title>
+</head>
+
+<body class="bg-gray-600">
+    <div class="grid grid-cols-4">
+        <div class="col-start-2 col-span-2">
+            <% include ('header.ejs') %>
+                <div class="py-4 flex justify-between items-center">
+                    <h2 class="text-3xl font-bold">My Courses</h2>
+                    <h1 class="text-gray-700 text-lg font-semibold">
+                       <a href="/signout"
+                                    class="text-green-600 text-lg font-semibold ml-2">Sign out</a>
+                    </h1>
+                </div>
+                <a href="/teacher" class="text-blue-600 text-sm font-semibold border-b-2 py-2 block">Dashboard</a>
+                <ul class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-4">
+                    <% for (let course of courses) { %>
+                        <% if (course.userId===currentUser.id) { %>
+                            <li class="mb-4">
+                                <a
+                                    href="/view-course/<%= course.id %>?currentUserId=<%= encodeURIComponent(currentUser.id) %>">
+                                    <div
+                                        class="bg-white border border-gray-300 p-4 rounded-lg shadow-md hover:shadow-lg transition-all">
+                                        <div class="flex items-center justify-between">
+                                            <h2 class="text-xl font-bold text-gray-800">
+                                                <%=course.courseName %>
+                                            </h2>
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                class="w-6 h-6 text-red-500 hover:text-gray-700 transition-all"
+                                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="square" stroke-linejoin="square" stroke-width="5"
+                                                    d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                        </div>
+                                        <a href="/view-course/<%= course.id %>?currentUserId=<%= encodeURIComponent(currentUser.id) %>"
+                                            class="block bg-green-500 text-white px-3 py-1 rounded mt-2 hover:bg-purple-700 transition-all">View
+                                            Course</a>
+                                    </div>
+                                </a>
+                            </li>
+                            <% } %>
+                                <% } %>
+                </ul>
+        </div>
+    </div>
+</body>
+
+</html>

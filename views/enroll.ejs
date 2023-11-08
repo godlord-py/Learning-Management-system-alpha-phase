@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="<%= csrfToken %>">
     <title>
         <%= title %>
@@ -20,12 +20,11 @@
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-2xl font-semibold">My Enrolled Courses:</h2>
                     <h1 class="text-xl font-semibold">
-                        <%= currentUser.firstName %>
-                            <%= currentUser.lastName %> <br> <a href="/signout"
+                        =<br> <a href="/signout"
                                     class="text-green-600 text-lg font-semibold hover:text-green-800">Signout</a>
                     </h1>
                 </div>
-                <a href="/pupil-interface"
+                <a href="/student"
                     class="text-blue-600 text-sm font-semibold border-b-2 py-2 inline-block hover:text-blue-800 mb-6">Back
                     to Dashboard</a>
                 <ul class="space-y-6">
