@@ -9,6 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
+    static addcourse (courseName, courseDescription) {
+      return this.create({
+        courseName,
+        courseDescription,
+        })
+    };
     static getCourses () {
       return this.findAll();
     }
@@ -20,18 +26,6 @@ module.exports = (sequelize, DataTypes) => {
       Courses.hasMany(models.Chapters, {
         foreignKey: "courseId",
       }); 
-      Courses.addcourse = async (courseName, courseDescription, email) => {
-        try {
-          const course = await Courses.create({
-            courseName,
-            courseDescription,
-            email,
-          });
-          return course;
-        } catch (error) {
-          console.error(error);
-        }
-      };
     } 
   }
 
@@ -43,4 +37,4 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Courses',
   });
   return Courses;
-}
+};

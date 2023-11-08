@@ -321,7 +321,7 @@ app.get(
         currentUser,
         csrfToken: request.csrfToken(),
       });
-      // console.log(courses);
+      console.log(courses);
     } catch (error) {
       console.error(error);
       return response.status(500).json({ message: "Internal server error" });
