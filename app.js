@@ -295,6 +295,7 @@ app.post(
         email: request.user.email,
       });
       response.redirect("/teacher");
+      console.log(courses);
     } catch (error) {
       console.log(error);
       return response.status(422).json(error);
@@ -320,6 +321,7 @@ app.get(
         currentUser,
         csrfToken: request.csrfToken(),
       });
+      // console.log(courses);
     } catch (error) {
       console.error(error);
       return response.status(500).json({ message: "Internal server error" });
@@ -384,7 +386,7 @@ app.get(
     }
   },
 );
-app.get("/viewcourse/:id", async (request, response) => {
+app.get("/viewcourses/:id", async (request, response) => {
   try {
     const courseId = request.params.id;
     const course = await Courses.findByPk(courseId);
@@ -396,7 +398,7 @@ app.get("/viewcourse/:id", async (request, response) => {
     if (!course) {
       return response.status(404).json({ message: "Course not found" });
     }
-    response.render("viewcourse", {
+    response.render("viewcourses", {
       title: "view course",
       course,
       chapters,

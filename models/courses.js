@@ -9,25 +9,32 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
+    static getCourses () {
+      return this.findAll();
+    }
     static associate(models) {
       // define association here 
       Courses.belongsTo(models.Users, {
         foreignKey: "userId",
       });
-
       Courses.hasMany(models.Chapters, {
         foreignKey: "courseId",
       }); 
-      Courses.getCourses = async () => {
+      Courses.addcourse = async (courseName, courseDescription, email) => {
         try {
-          const courses = await Courses.findAll();
-          return courses;
+          const course = await Courses.create({
+            courseName,
+            courseDescription,
+            email,
+          });
+          return course;
         } catch (error) {
           console.error(error);
         }
       };
     } 
   }
+
   Courses.init({
     courseName: DataTypes.STRING,
     courseDescription: DataTypes.TEXT
@@ -36,4 +43,4 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Courses',
   });
   return Courses;
-};
+}
