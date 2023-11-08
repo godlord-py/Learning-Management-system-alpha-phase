@@ -193,7 +193,7 @@ app.get(
 
 
       response.render("student", {
-        title: "Student Dashboard",
+        title: "Student Dashboard", 
         courses: existingCourses,
         users: existingUsers,
         enrols: existingEnrollments,
@@ -339,7 +339,6 @@ app.get(
 
       return response.redirect("/login");
     }
-
     try {
       const currentUser = request.user;
       if (!currentUser) {
