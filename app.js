@@ -388,7 +388,7 @@ app.get(
     }
   },
 );
-app.get("/viewcourses/:id", async (request, response) => {
+app.get("/view-course/:id", async (request, response) => {
   try {
     const courseId = request.params.id;
     const course = await Courses.findByPk(courseId);
@@ -396,14 +396,14 @@ app.get("/viewcourses/:id", async (request, response) => {
     const currentUserId = request.query.currentUserId;
     const currentUser = await Users.findByPk(decodeURIComponent(currentUserId));
     const existingEnrollments = await Enrollments.findAll();
-    const chapters = await chapters.findAll({ where: { courseId } });
+    // const chapters = await chapters.findAll({ where: { courseId } });
     if (!course) {
       return response.status(404).json({ message: "Course not found" });
     }
     response.render("viewcourses", {
       title: "view course",
       course,
-      chapters,
+      // chapters,
       userofCourse,
       enrols: existingEnrollments,
       currentUser,

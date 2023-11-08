@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -37,11 +37,11 @@
                                     <%= course.id %>
                                 </p>
                                 <p class="text-lg mb-2"><strong>Created By:</strong>
-                                    <%= userofCourse.firstName %>
-                                        <%= userofCourse.lastName %>
+                                    <%= currentUser.firstName %>
+                                        <%= currentUser.lastName %>
                                 </p>
                                 <p class="text-lg mb-2"><strong>Email:</strong>
-                                    <%= userofCourse.email %>
+                                    <%= currentUser.email %>
                                 </p>
                                 <p class="text-lg mb-2"><strong>Description:</strong>
                                     <%= course.courseDescription %>
@@ -55,30 +55,8 @@
                                             </span>
                                             <% } %>
                                 </p>
-                                <ol class="list-decimal text-lg ml-8 mb-4">
-                                    <% if (chapters.length===0) { %>
-                                        <h3 class="mb-5 text-xl text-gray-600">Not available</h3>
-                                        <% } else { %>
-                                            <% for (let chapter of chapters) { %>
-                                                <li class="text-blue-600 hover:text-blue-800 hover:underline">
-                                                    <% if (currentUser.role==="teacher" || (currentUser.role==="student"
-                                                        && isEnrolled)) { %>
-                                                        <a
-                                                            href="/viewchapter/<%= chapter.id %>/generateSheet?currentUserId=<%= encodeURIComponent(currentUser.id) %>">
-                                                            <%= chapter.chapterName %>
-                                                        </a>
-                                                        <% } else { %>
-                                                            <%= chapter.courseName %>
-                                                                <% } %>
-                                                </li>
-                                                <% } %>
-                                                    <% } %>
-                                </ol>
-                                <% if(userofCourse.id===currentUser.id) { %>
-                                    <a href="/viewcourse/<%= course.id %>/generateSection?currentUserId=<%= currentUser.id %>"
-                                        class="bg-blue-600 text-white px-4 py-2 rounded text-xl hover:bg-blue-700 text-center ml-8">Create
-                                        a New Chapter</a>
-                                    <% } %>
+                          
+                              
                             </div>
         </div>
     </div>
