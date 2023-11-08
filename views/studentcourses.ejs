@@ -28,23 +28,7 @@
                 <a href="/student"
                     class="text-blue-600 text-sm font-semibold border-b-2 py-2 inline-block hover:text-blue-800 mb-6">Dashboard</a>
                 <ul class="space-y-6">
-                    <% for (let course of courses) { %>
-                        <li>
-                            <a
-                                href="/view-course/<%= course.id %>?currentUserId=<%= encodeURIComponent(currentUser.id) %>">
-                                <div>
-                                    <div class="flex items-center justify-between mb-4">
-                                        <h2 class="text-2xl font-semibold">
-                                            <%= course.courseName %>
-                                        </h2>
-                                    </div>
-                                    <a href="/view-course/<%= course.id %>?currentUserId=<%= encodeURIComponent(currentUser.id) %>">
-                                        View Course
-                                    </a>
-                                </div>
-                            </a>
-                        </li>
-                        <% } %>
+                    <p>Yet to implement enroll courses feature</p>
                 </ul>
             </div>
     </div>

@@ -303,6 +303,12 @@ app.post(
     }
   },
 );
+app.get("/studentcourses", (request, response) => {
+  response.render("studentcourses", {
+    title: "Student Courses",
+    csrfToken: request.csrfToken(),
+  });
+})
 app.get(
   "/courses",
   connnectEnsureLogin.ensureLoggedIn(),
