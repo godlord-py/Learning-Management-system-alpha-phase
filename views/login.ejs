@@ -14,7 +14,7 @@
             <div class = "col-start-3 col-span-2">  
                 <%- include('header.ejs')%>
                 <h6 class="py-4">Login</h6>
-                <form action="/logging" method= "post" autocomplete="on">
+                <form action="/logging" method= "post" >
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <div class = "py-3 " >
                     <label for="Email">Email:</label>
@@ -23,14 +23,6 @@
                     <div class = "py-3 " >
                     <label for="Password">Password:</label>
                     <input type = "password" name= "password" class = "border border-gray-900 text-gray-900 rounded p-4 w-full py-1" required>
-                    </div>
-                    <div class="py-2">
-                        <label for="type" class="text-gray-900 text-lg">Type:</label>
-                        <select name="role" id="role" class="border border-gray-300 rounded p-2 w-full text-gray-900 text-lg">
-                            <option value="null">Please select:</option>
-                            <option value="teacher">Teacher</option>
-                            <option value="student">Student</option>
-                        </select>
                     </div>
                     <div class = "py-3 " >
                     <button type = "submit" class = "px-5 py-1.5 rounded background-color: bg-red-600 text-white font-medium mr-2 mb-2">Login</button>

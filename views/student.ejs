@@ -15,7 +15,8 @@
             <%- include ('header.ejs') %>
             <div class="py-4 flex flex-col ml-6 mr-6 mt-3">
                 <div class="py-2 border-b-2 m-2" style="display: flex; justify-content: space-between;">
-                    <h1 class="text-black-600 text-xl font-semibold">Welcome, <br> Student: </h1>
+                    <h1 class="text-black-600 text-xl font-semibold">Welcome Student: <%= locals.currentUser.firstName %>
+                        <%= currentUser.lastName %></h1>
                     <a href="/signout" class="text-blue-600 text-xl font-semibold">Signout</a>
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
                 </div> 
@@ -24,7 +25,7 @@
                         🚀Unlock Your Potential: Your Learning Adventure Begins Here!
                     </h1>
                     <p class="text-xl text-gray-700 m-3">
-                        Dive into a world of knowledge. Explore our diverse courses and embark on your journey to success.
+                       Here you can Explore various courses and excel in your goals!
                     </p>                
                 </div>
                 <div class="m-2 flex flex-row justify-evenly">

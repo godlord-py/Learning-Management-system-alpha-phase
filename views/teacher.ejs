@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= csrfToken %>">
+    <script src="https://cdn.tailwindcss.com" rel="stylesheet"></script>
+    <link rel="stylesheet" href="./css/styles.css">
+    <title>Teacher Dashboard</title>
+</head>
+<body class="bg-gray-900">
+    <div class="container mx-auto py-4 bg-blue-200">
+        <% include ('header.ejs') %>
+            <div class="col-start-2 col-span-2 p-3 rounded-lg shadow">
+                <div class="py-4 flex flex-col m-3">
+                    <div class="py-4 border-b-2 m-3 flex justify-between items-center">
+                        <h1 class="text-2xl font-bold text-gray-800">Welcome Teacher: 
+                        </h1>
+                        <a href="/signout"
+                            class="text-red-600 text-xl font-semibold hover:text-purple-800 transition-all">Signout</a>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mt-4">
+                        <a href="/initiateModule"
+                            class="bg-blue-600 text-white px-4 py-2 rounded font-medium hover:bg-purple-700 transition-all">Create
+                            a New Course</a>
+                        <a href="/enroll"
+                            class="bg-blue-600 text-white px-4 py-2 rounded font-medium hover:bg-purple-700 transition-all">My
+                            Courses</a>
+                        <a href="/view-report"
+                            class="bg-green-600 text-white px-4 py-2 rounded font-medium hover:bg-purple-700 transition-all">View
+                            Report</a>
+                        <a href="/Password"
+                            class="bg-green-600 text-white px-4 py-2 rounded font-medium hover:bg-purple-700 transition-all">Change
+                            Password</a>
+                    </div>
+                    <hr class="my-4">
+                </div>
+
+                    <% if(messages && messages.error && messages.error.length> 0) { %>
+                        <ul class="my-4">
+                            <% for(var i=0; i<messages.error.length; i++) { %>
+                                <li class="bg-red-300 list-none rounded border-gray-50 px-4 py-2 text-red-800 mb-2">
+                                    <%= messages.error[i] %>
+                                </li>
+                                <% } %>
+                        </ul>
+                        <% } %>
+            </div>
+    </div>
+</body>
+
+</html>
