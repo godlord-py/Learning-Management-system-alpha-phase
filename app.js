@@ -13,9 +13,10 @@ const passport = require("passport");
 const session = require('express-session');
 const flash = require("connect-flash");
 const LocalStrategy = require('passport-local');
-const {Users, Courses, Enrollments} = require("./models");
+const {Users, Courses, Enrollments, Chapters} = require("./models");
 const connnectEnsureLogin = require("connect-ensure-login");
 const users = require("./models/users");
+const courses = require("./models/courses");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.urlencoded({ extended: false }));
@@ -312,7 +313,32 @@ app.get(
       if (!currentUser) {
         return response.status(404).json({ message: "User not found" });
       }
-      const userCourses = await currentUser.getCourses();
+      const userCourses = await Courses.getCourses();
+      response.render("courses", {
+        title: "Courses",
+        courses: userCourses,
+        currentUser,
+        csrfToken: request.csrfToken(),
+      });
+    } catch (error) {
+      console.error(error);
+      return response.status(500).json({ message: "Internal server error" });
+    }
+  },
+);
+app.get(
+  "/studentcourses",
+  connnectEnsureLogin.ensureLoggedIn(),
+  async (request, response) => {
+    if (!request.isAuthenticated()) {
+      return response.redirect("/login");
+    } 
+    try {
+      const currentUser = request.user;
+      if (!currentUser) {
+        return response.status(404).json({ message: "User not found" });
+      }
+      const userCourses = await Courses.getCourses();
       response.render("courses", {
         title: "Courses",
         courses: userCourses,
@@ -410,7 +436,7 @@ app.get(
     const currentUserId = request.query.currentUserId;
     const currentUser = await Users.findByPk(decodeURIComponent(currentUserId));
 
-    response.render("generateSection", {
+    response.render("chapters", {
       title: "Chapters",
       courseId,
       course,
@@ -426,30 +452,24 @@ app.post(
   connnectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     const courseId = request.body.courseId;
-
-    // Check if the course fields provided in the request body are not empty
     if (request.body.segmentName.length == 0) {
       request.flash("error", "Chapter name cannot be empty!");
       return response.redirect(
         `/view-course/${request.body.courseId}?currentUserId=${request.query.currentUserId}`,
       );
     }
-
     if (request.body.segmentDescription.length == 0) {
       request.flash("error", "Description cannot be empty!");
       return response.redirect(
         `/view-course/${request.body.courseId}?currentUserId=${request.query.currentUserId}`,
       );
     }
-
     try {
-
       await Chapters.create({
         segmentName: request.body.segmentName,
         segmentDescription: request.body.segmentDescription,
         courseId,
       });
-
       response.redirect(
         `/view-course/${request.body.courseId}?currentUserId=${request.query.currentUserId}`,
       );

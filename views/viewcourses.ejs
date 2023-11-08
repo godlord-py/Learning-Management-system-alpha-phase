@@ -25,15 +25,13 @@
                     </h1>
                 </div>
                 <% if (currentUser.role==="student" ) { %>
-                    <a href="/student" class="text-blue-600 text-sm font-bold border-b-2 py-2 m-2">Back to
-                        Dashboard</a>
+                    <a href="/student" class="text-blue-600 text-sm font-bold border-b-2 py-2 m-2">Dashboard</a>
                     <% } else { %>
-                        <a href="/teacher" class="text-blue-600 text-sm font-bold border-b-2 py-2 m-2">Back
-                            to Dashboard</a>
+                        <a href="/teacher" class="text-blue-600 text-sm font-bold border-b-2 py-2 m-2">Dashboard</a>
                         <% } %>
                             <div class="bg-white p-4 m-4">
                                 <h2 class="text-4xl font-bold mb-4 text-gray-800">
-                                    <%= course.programName %>
+                                    <%= course.courseName %>
                                 </h2>
                                 <p class="text-lg mb-2"><strong>Course ID:</strong>
                                     <%= course.id %>

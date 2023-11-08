@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= csrfToken %>">
+    <title>
+        <%= title %>
+    </title>
+    <script src="https://cdn.tailwindcss.com"></script> 
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body class="bg-gray-100">
+    <div class="container mx-auto py-6">
+        <% include ('header.ejs') %>
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-semibold">My Enrolled Courses:</h2>
+                    <h1 class="text-xl font-semibold">
+                        <%= currentUser.firstName %>
+                            <%= currentUser.lastName %> <br> <a href="/signout"
+                                    class="text-green-600 text-lg font-semibold hover:text-green-800">Signout</a>
+                    </h1>
+                </div>
+                <a href="/student"
+                    class="text-blue-600 text-sm font-semibold border-b-2 py-2 inline-block hover:text-blue-800 mb-6">Dashboard</a>
+                <ul class="space-y-6">
+                    <% for (let course of courses) { %>
+                        <li>
+                            <a
+                                href="/view-course/<%= course.id %>?currentUserId=<%= encodeURIComponent(currentUser.id) %>">
+                                <div>
+                                    <div class="flex items-center justify-between mb-4">
+                                        <h2 class="text-2xl font-semibold">
+                                            <%= course.programName %>
+                                        </h2>
+                                    </div>
+                                    <a href="/view-course/<%= course.id %>?currentUserId=<%= encodeURIComponent(currentUser.id) %>">
+                                        View Course
+                                    </a>
+                                </div>
+                            </a>
+                        </li>
+                        <% } %>
+                </ul>
+            </div>
+    </div>
+</body>
+
+</html>

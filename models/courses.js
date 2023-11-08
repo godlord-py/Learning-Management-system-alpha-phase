@@ -18,7 +18,15 @@ module.exports = (sequelize, DataTypes) => {
       Courses.hasMany(models.Chapters, {
         foreignKey: "courseId",
       }); 
-    }
+      Courses.getCourses = async () => {
+        try {
+          const courses = await Courses.findAll();
+          return courses;
+        } catch (error) {
+          console.error(error);
+        }
+      };
+    } 
   }
   Courses.init({
     courseName: DataTypes.STRING,

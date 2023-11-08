@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= csrfToken %>">
+    <title>
+        <%= title %>
+    </title>
+    <script src="https://cdn.tailwindcss.com" rel="stylesheet"> </script>
+</head>
+
+<body class="bg-gray-100">
+    <div class="grid grid-cols-4">
+        <div class="col-start-2 col-span-2 bg-white rounded-lg shadow-lg p-4">
+            <%- include('header.ejs') %>
+                <div class="py-2 flex justify-between items-center border-b-2 text-sm font-semibold">
+                    <a href="/view-course/<%= course.id %>?currentUserId=<%= currentUser.id %>"
+                        class="text-purple-600 hover:text-green-700 transition-all">Course</a>
+                    <h1 class="text-black text-sm font-semibold transition-all">
+                        <%= currentUser.firstName %>
+                            <%= currentUser.lastName %> <br>
+                                <a href="/signout"
+                                    class="text-green-600 hover:text-purple-600 text-lg font-semibold transition-all">Signout</a>
+                    </h1>
+                </div>
+                <h1 class="text-black text-2xl font-semibold border-b-2 py-2 mb-4"><strong>Course:</strong>
+                    <%= course.courseName %>
+                </h1>
+                <h1 class="text-black text-2xl font-semibold border-b-2 py-2 mb-4 transition-all">Create Chapter!
+                </h1>
+                <form action="/view-course/<%= courseId %>/generateSection?currentUserId=<%= currentUser.id %>"
+                    method="post" autocomplete="on" class="space-y-4">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="hidden" name="courseId" value="<%= courseId %>">
+                    <div class="py-2">
+                        <label for="courseName" class="text-gray-900 text-lg font-medium transition-all">Chapter
+                            Name:</label>
+                        <input type="text" name="chapterName" id="chapterName"
+                            class="border border-gray-300 rounded p-2 w-full text-gray-900 text-lg transition-all"
+                            required />
+                    </div>
+                    <div class="py-2">
+                        <label for="chapterDescription" class="text-gray-900 text-lg font-medium transition-all">Chapter
+                            Description:</label>
+                        <textarea name="chapterDescription" id="chapterDescription"
+                            class="border border-gray-300 rounded p-2 w-full h-36 text-gray-900 text-lg transition-all"
+                            required></textarea>
+                    </div>
+                    <div class="py-2">
+                        <button type="submit"
+                            class="bg-green-600 text-white px-5 py-2 rounded font-medium hover:bg-green-700 transition-all">Create
+                            Chapter</button>
+                    </div>
+                </form>
+        </div>
+    </div>
+</body>
+
+</html>
