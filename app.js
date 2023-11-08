@@ -121,6 +121,29 @@ app.get("/login" , (req,res) => {
 })
 
 app.post("/users", async (request , response) => {
+  if (!request.body.role) {
+    request.flash("error", "Role is required");
+    return response.redirect("/signup");
+  }
+  if (request.body.email.length == 0) {
+    request.flash("error", "Email address is required");
+    return response.redirect("/signup");
+  }
+
+  if (request.body.firstName.length == 0) {
+    request.flash("error", "First name is required");
+    return response.redirect("/signup");
+  }
+
+  if (request.body.lastName.length == 0) {
+    request.flash("error", "Last name is required");
+    return response.redirect("/signup");
+  }
+
+  if (request.body.password.length < 8) {
+    request.flash("error", "Your password is too short. Need atleast 8 characters to make it stronger");
+    return response.redirect("/signup");
+  }
     const hashedpwd = await bcrypt.hash(request.body.password, 10)
     try {
     const User = await Users.create({
