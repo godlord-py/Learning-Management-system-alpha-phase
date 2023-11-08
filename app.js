@@ -293,9 +293,10 @@ app.post(
         courseName: request.body.courseName,
         courseDescription: request.body.courseDescription,
         email: request.user.email,
+        userId: request.user.id,
       });
       response.redirect("/teacher");
-      console.log(userCourses);
+     
     } catch (error) {
       console.log(error);
       return response.status(422).json(error);
@@ -315,6 +316,8 @@ app.get(
         return response.status(404).json({ message: "User not found" });
       }
       const userCourses = await Courses.getCourses();
+      console.log(userCourses);
+      console.log("list course=>",userCourses);
       response.render("courses", {
         title: "Courses",
         courses: userCourses,
