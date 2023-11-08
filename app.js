@@ -287,6 +287,7 @@ app.post(
       request.flash("error", "Description is empty! Please enter description");
       return response.redirect("/teacher");
     }
+    console.log(request.body.courseName);
     try {
       await Courses.addcourse({
         courseName: request.body.courseName,
