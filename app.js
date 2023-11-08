@@ -425,7 +425,7 @@ app.delete(
   },
 );
 app.get(
-  "/view-course/:id/generateSection",
+  "/viewcourses/:id/generateSection",
   connnectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     const courseId = request.params.id;
@@ -455,13 +455,13 @@ app.post(
     if (request.body.segmentName.length == 0) {
       request.flash("error", "Chapter name cannot be empty!");
       return response.redirect(
-        `/view-course/${request.body.courseId}?currentUserId=${request.query.currentUserId}`,
+        `/viewcourses/${request.body.courseId}?currentUserId=${request.query.currentUserId}`,
       );
     }
     if (request.body.segmentDescription.length == 0) {
       request.flash("error", "Description cannot be empty!");
       return response.redirect(
-        `/view-course/${request.body.courseId}?currentUserId=${request.query.currentUserId}`,
+        `/viewcourses/${request.body.courseId}?currentUserId=${request.query.currentUserId}`,
       );
     }
     try {
@@ -471,7 +471,7 @@ app.post(
         courseId,
       });
       response.redirect(
-        `/view-course/${request.body.courseId}?currentUserId=${request.query.currentUserId}`,
+        `/viewcourses/${request.body.courseId}?currentUserId=${request.query.currentUserId}`,
       );
     } catch (error) {
       console.log(error);
