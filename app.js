@@ -316,7 +316,7 @@ app.get(
         return response.status(404).json({ message: "User not found" });
       }
       const userCourses = await Courses.getCourses();
-      console.log("list course=>",userCourses);
+      // console.log("list course=>",userCourses);
       response.render("courses", {
         title: "Courses",
         courses: userCourses,
