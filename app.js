@@ -5,6 +5,7 @@ var cookieParser = require("cookie-parser");
 var csrf = require("csurf");
 const path = require("path");
 const bodyParser = require("body-parser");
+const port = process.env.PORT || 3000; 
 const ejs = require('ejs');
 const { userInfo } = require("os");
 const templatepath = path.join(__dirname, "views");
@@ -175,10 +176,14 @@ app.get("/teacher", (req,res) => {
   csrfToken: req.csrfToken(),
   })
 });
-app.set('port', process.env.PORT || 3000);
+
+app.listen(port, () => {
+  console.log("started");
+});
+
 app.get(
   "/student",
-  connnectEnsureLogin.ensureLoggedIn(),
+  connnectEnsureLogin.ensureLoggedIn(), 
   async (request, response) => {
     const currentUser = request.user;
     try {
