@@ -175,9 +175,7 @@ app.get("/teacher", (req,res) => {
   csrfToken: req.csrfToken(),
   })
 });
-app.listen(3000, () => {
-    console.log("Server is running on port 3000");
-});
+app.set('port', process.env.PORT || 3000);
 app.get(
   "/student",
   connnectEnsureLogin.ensureLoggedIn(),
