@@ -9,7 +9,7 @@
     "test": "NODE_ENV=test jest --detectOpenHandles",
     "prepare": "husky install",
     "start": "nodemon app.js",
-    "start:prod": "node app.js"
+    "start:prod": "node index.js"
   },
   "keywords": [
     "ok"
