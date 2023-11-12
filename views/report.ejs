@@ -48,6 +48,11 @@
                                     <p class="text-3xl font-bold mb-4">
                                       <%= course.isEnrolled%>
                                     </p>
+                                    <center>
+                                    <a href="/courses/<%= course.id %>?currentUserId=<%= encodeURIComponent(currentUser.id) %>"
+                                        class="block bg-green-500 text-white px-3 py-1 rounded mt-2 hover:bg-purple-700 transition-all">View
+                                        Course</a>
+                                    </center>
                                 </div>
                             </li>
                             <% }); %>

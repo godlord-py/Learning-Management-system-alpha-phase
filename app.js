@@ -488,7 +488,7 @@ app.delete(
       return response.json(status ? true : false);
     } catch (err) {
       return response.status(422).json(err);
-    }
+    } 
   },
 );
 app.get(
