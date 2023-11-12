@@ -16,8 +16,11 @@ module.exports = {
       chapterDescription: {
         type: Sequelize.TEXT
       },
+      courseId: {
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
-        allowNull: false,
+        allowNull: false, 
         type: Sequelize.DATE
       },
       updatedAt: {

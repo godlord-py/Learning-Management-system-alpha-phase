@@ -10,34 +10,35 @@
     <title><%=title%></title>
 </head>
 <body>
-    <div class="grid grid-cols-4">
+    <div class="grid grid-cols-4 bg-gray-700">
         <div class="col-start-2 col-span-2">
             <%- include ('header.ejs') %>
             <div class="py-4 flex flex-col ml-6 mr-6 mt-3">
                 <div class="py-2 border-b-2 m-2" style="display: flex; justify-content: space-between;">
                     <h1 class="text-black-600 text-xl font-semibold">Welcome Student: <%= locals.currentUser.firstName %>
                         <%= currentUser.lastName %></h1>
-                    <a href="/signout" class="text-blue-600 text-xl font-semibold">Signout</a>
+                    <a href="/signout" class="text-blue-400 text-xl font-semibold">Signout</a>
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
                 </div> 
                 <div class="border-b-2 m-1">
-                    <h1 class="text-xl font-bold text-black-600 mb-2"> 
+                    <h1 class="text-xl font-bold text-black-600 mb-2 px-3 py-1"> 
                         Tap into Your Capabilities, Your Educational Adventure Begins Now!
                     </h1>
-                    <p class="text-xl text-gray-700 m-3">
+                    <p class="text-xl text-blue-400 m-3">
                        Here you can Explore various courses and excel in your goals!
                     </p>                
                 </div>
                 <div class="m-2 flex flex-row justify-evenly">
-                    <a href="/studentcourses" class="bg-blue-600 text-white px-5 py-2 rounded font-medium hover:bg-blue-700 text-center block">
+                    <a href="/studentcourses" class="bg-green-600 text-white px-5 py-2 rounded font-medium hover:bg-red-700 text-center block">
                         My Enrolled Courses
                     </a>
-                    <a href="/Password" class="bg-green-600 text-white px-5 py-2 rounded font-medium hover:bg-red-700 text-center block">
+                    <a href="/Password" class="bg-red-600 text-white px-5 py-2 rounded font-medium hover:bg-green-700 text-center block">
                         Change Password
                     </a>
                 </div>
                 <hr class="m-3">
             </div>
+            <%- include ('enroll.ejs', { currentUser, courses, users, enrols }) %>
             <% if(messages && messages.error && messages.error.length> 0) { %>
                 <ul class="my-4">
                     <% for(var i=0; i<messages.error.length; i++) { %>
@@ -47,7 +48,6 @@
                         <% } %>
                 </ul>
                 <% } %>
-           
         </div>
     </div>
 </body>

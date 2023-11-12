@@ -10,10 +10,10 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       userId: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       courseId: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       pageId: {
         type: Sequelize.STRING

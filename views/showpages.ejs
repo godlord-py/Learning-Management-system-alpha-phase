@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= csrfToken %>">
+    <title>
+        <%= title %>
+    </title><script src="https://cdn.tailwindcss.com"></script> 
+    <link rel="stylesheet" href="./css/styles.css">
+    
+</head>
+<body class="bg-gray-100">
+    <div class="grid grid-cols-4">
+        <div class="col-start-2 col-span-2">
+            <%- include('header.ejs') %>
+                <div class="py-2 flex justify-between items-center border-b-2 text-sm font-semibold">
+                    <a href="/view-course/<%= course.id %>?currentUserId=<%= currentUser.id %>"
+                        class="text-blue-600 text-sm font-semibold border-b-2 py-2 hover:text-blue-700 transition-all">Back
+                        to Course</a>
+                    <h1 class="text-black text-sm font-semibold transition-all">
+                        <%= currentUser.firstName %>
+                            <%= currentUser.lastName %> <br>
+                                <a href="/signout"
+                                    class="text-green-600 text-lg font-semibold transition-all">Signout</a>
+                    </h1>
+                </div>
+                <h1 class="text-black text-2xl font-semibold border-b-2 py-2 mb-2">
+                    <strong>Course: </strong>
+                    <%= course.courseName %> <br>
+                        <strong>Chapter: </strong>
+                        <%= chapter.chapterName %>
+                </h1>
+                <ol class="m-4 space-y-4 list-decimal">
+                    <% if (pages.length===0) { %>
+                        <h3 class="mb-5 text-2xl text-gray-600">---No pages available</h3>
+                        <% } else { %>
+                            <% for (let page of pages) { %>
+                                <li class="mb-5">
+                                    <div
+                                        class="bg-white border border-gray-300 p-4 rounded-lg shadow-md hover:shadow-lg transition-all">
+                                        <div class="flex items-center justify-between">
+                                            <h2
+                                                class="text-2xl font-semibold text-indigo-600 m-2 hover:text-indigo-700 transition-all">
+                                                <%= page.head %>
+                                            </h2>
+                                        </div>
+                                        <h3 class="text-lg text-gray-800 m-2">
+                                            <%= page.info %>
+                                        </h3>
+                                    </div>
+                                </li>
+                                <% } %>
+                                    <% } %>
+                </ol>
+                <% if(userOfCourse.id===currentUser.id) { %>
+                    <h1
+                        class="text-black text-2xl font-semibold border-t-2 bg-green-100 border-b-2 py-2 mt-6 mb-2 transition-all">
+                        Create a New Page</h1>
+                    <form action="/view-course/<%= chapterId %>/showpages?currentUserId=<%= currentUser.id %>"
+                        method="post" autocomplete="on" class="m-3 space-y-4">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <input type="hidden" name="chapterId" value="<%= chapterId %>">
+                        <div class="py-2">
+                            <label for="pageName" class="text-gray-900 text-lg font-medium transition-all">Page
+                                Title:</label>
+                            <input type="text" name="pageName" id="pageName"
+                                class="border border-gray-300 rounded p-2 w-full text-gray-900 text-lg transition-all"
+                                required />
+                        </div>
+                        <div class="py-2">
+                            <label for="pageDescription" class="text-gray-900 text-lg font-medium transition-all">Page
+                                Content:</label>
+                            <textarea name="pageDescription" id="pageDescription">
+                                class="border border-gray-300 rounded p-2 w-full h-36 text-gray-900 text-lg transition-all"
+                                required></textarea>
+                        </div>
+                        <div class="py-2">
+                            <button type="submit"
+                                class="bg-green-600 text-white px-5 py-2 rounded font-medium hover:bg-green-700 transition-all">Create
+                                Page</button>
+                        </div>
+                    </form>
+                    <% } %>
+        </div>
+    </div>
+</body>
+
+</html>

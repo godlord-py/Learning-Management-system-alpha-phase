@@ -1,61 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE-edge">
-    <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="<%= csrfToken %>">
-    <title>
-        <%= title %>
-    </title>
-    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
-    <link rel="stylesheet" href="./css/styles.css">
-</head>
-
-<body class="bg-gray-100">
-    <div class="container mx-auto py-6">
-        <% include ('header.ejs') %>
-            <div class="bg-white rounded-lg shadow p-6">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-2xl font-semibold">My Enrolled Courses:</h2>
-                    <h1 class="text-xl font-semibold">
-                        =<br> <a href="/signout"
-                                    class="text-green-600 text-lg font-semibold hover:text-green-800">Signout</a>
-                    </h1>
-                </div>
-                <a href="/student"
-                    class="text-blue-600 text-sm font-semibold border-b-2 py-2 inline-block hover:text-blue-800 mb-6">Back
-                    to Dashboard</a>
-                <ul class="space-y-6">
-                    <% for (let course of courses) { %>
-                        <li>
-                            <a
-                                href="/view-course/<%= course.id %>?currentUserId=<%= encodeURIComponent(currentUser.id) %>">
-                                <div
-                                    class="bg-white border border-gray-300 p-6 rounded-lg shadow-sm hover:shadow-lg transition-all">
-                                    <div class="flex items-center justify-between mb-4">
-                                        <h2 class="text-2xl font-semibold">
-                                            <%= course.programName %>
-                                        </h2>
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            class="w-6 h-6 text-gray-500 hover:text-gray-700 cursor-pointer transition-all"
-                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M9 5l7 7-7 7"></path>
-                                        </svg>
-                                    </div>
-                                    <a href="/view-course/<%= course.id %>?currentUserId=<%= encodeURIComponent(currentUser.id) %>"
-                                        class="bg-blue-600 text-white px-4 py-2 rounded font-medium hover:bg-blue-700 transition-all">
-                                        View Course
-                                    </a>
-                                </div>
-                            </a>
-                        </li>
-                        <% } %>
-                </ul>
-            </div>
-    </div>
-</body>
-
-</html>
+<div class="py-4">
+    <h2 class="text-2xl font-semibold py-1 text-gray-800 transition-all">Available Courses:</h2>
+    <ul class="space-y-4">
+        <% for (let course of courses) { %>
+            <a href="/view-course/<%= course.id %>?currentUserId=<%= encodeURIComponent(currentUser.id) %>">
+                <li>
+                    <div
+                        class="bg-white border border-gray-300 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-2xl font-bold text-indigo-600 m-1 transition-all">
+                                <%= course.courseName %>
+                            </h2>
+                        </div>
+                        <% for(let user of users) { %>
+                            <% if(user.id===course.userId) { %>
+                                <h3 class="text-lg font-semibold text-gray-700 ml-3 mt-2 mb-3 transition-all"> by <%=
+                                        user.firstName %>
+                                        <%= user.lastName %>
+                                </h3>
+                                <% } %>
+                                    <% } %>
+                                        <% const isEnrolled=enrols.some(enrollment=> enrollment.userId ===
+                                            currentUser.id && enrollment.courseId === course.id); %>
+                                            <% if (isEnrolled) { %>
+                                                <button
+                                                    class="bg-gray-300 text-gray-700 px-3 py-1 rounded mx-2 transition-all"
+                                                    disabled>Enrolled</button>
+                                                <% } else { %>
+                                                    <a href="/view-course/<%= course.id %>?currentUserId=<%= encodeURIComponent(currentUser.id) %>"
+                                                        class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 mx-2 transition-all">View
+                                                        Course</a>
+                                                    <form method="POST"
+                                                        action="/enroll-course/<%= course.id %>?currentUserId=<%= encodeURIComponent(currentUser.id) %>"
+                                                        style="display: inline;">
+                                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                                        <% if (currentUser.role==="student" ) { %>
+                                                            <button type="submit"
+                                                                class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 mx-2 transition-all">Enroll in the course</button>
+                                                            <% } %>
+                                                    </form>
+                                                    <% } %>
+                    </div>
+                </li>
+            </a>
+            <% } %>
+    </ul>
+</div>

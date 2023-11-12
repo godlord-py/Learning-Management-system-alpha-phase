@@ -11,13 +11,13 @@
     <script src="https://cdn.tailwindcss.com" rel="stylesheet"> </script>
 </head>
 
-<body class="bg-gray-100">
-    <div class="grid grid-cols-4">
-        <div class="col-start-2 col-span-2 bg-white rounded-lg shadow-lg p-4">
+<body class="bg-gray-800">
+    <div class="grid grid-cols-4 bg-gray-800">
+        <div class="col-start-2 col-span-2 bg-gray-500 rounded-lg shadow-lg p-4 ">
             <%- include('header.ejs') %>
-                <div class="py-2 flex justify-between items-center border-b-2 text-sm font-semibold">
+                <div class="py-2 flex justify-between items-center border-b-2 text-sm font-semibold ">
                     <a href="/view-course/<%= course.id %>?currentUserId=<%= currentUser.id %>"
-                        class="text-purple-600 hover:text-green-700 transition-all">Course</a>
+                        class="text-blue-400 hover:text-green-700 transition-all">Go Back to Course</a>
                     <h1 class="text-black text-sm font-semibold transition-all">
                         <%= currentUser.firstName %>
                             <%= currentUser.lastName %> <br>
@@ -30,7 +30,7 @@
                 </h1>
                 <h1 class="text-black text-2xl font-semibold border-b-2 py-2 mb-4 transition-all">Create Chapter!
                 </h1>
-                <form action="/view-course/<%= courseId %>/generateSection?currentUserId=<%= currentUser.id %>"
+                <form action="/view-course/<%= courseId %>/showpages?currentUserId=<%= currentUser.id %>"
                     method="post" autocomplete="on" class="space-y-4">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <input type="hidden" name="courseId" value="<%= courseId %>">

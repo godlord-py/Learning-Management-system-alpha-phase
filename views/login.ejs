@@ -9,14 +9,19 @@
         <link rel="stylesheet" href="/css/styles.css">
         <script src="https://cdn.tailwindcss.com"></script> 
     </head>
+    <style>
+        body {
+            background-color: rgb(104, 102, 102)
+        }
+    </style>
     <body> 
         <div class = "grid grid-cols-6">
             <div class = "col-start-3 col-span-2">  
-                <%- include('header.ejs')%>
+                <div class = "font-3xl font-bold text-white "<%- include('header.ejs')%> </div>
                 <h6 class="py-4">Login</h6>
                 <form action="/logging" method= "post" >
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                    <div class = "py-3 " >
+                    <div class = "py-3  " >
                     <label for="Email">Email:</label>
                     <input type = "email" name= "email" class = "border border-gray-900 text-gray-900 rounded p-4 w-full py-1" required>
                     </div>
