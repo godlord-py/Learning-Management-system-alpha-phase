@@ -82,10 +82,12 @@
                                         <a href="/view-course/<%= course.id %>/viewcourse?currentUserId=<%= currentUser.id %>"
                                             class="bg-blue-600 text-white px-4 py-3 rounded text-xl hover:bg-red-700 text-center ml-8">Create
                                             a Chapter</a>
-                                            <button type="delete" 
-                                            class="bg-red-600 text-white px-5 py-4 ml-10 rounded font-medium hover:bg-green-700 transition-all">DELETE
-                                            COURSE</button>
-                                        <% } %>            
+                                            <% if (course.userId===currentUser.id) { %>
+                                                <a href="/view-course/<%= course.id %>"
+                                                    class="bg-blue-600 text-white px-4 py-3 rounded text-xl hover:bg-red-700 text-center ml-8" >DELETE</a>
+                                                    </a>
+                                            <% } %>  
+                                    <% } %>         
                         </div>
         </div>
     </div>

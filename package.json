@@ -33,6 +33,7 @@
     "express-flash": "^0.0.2",
     "express-session": "^1.17.3",
     "husky": "^8.0.3",
+    "method-override": "^3.0.0",
     "pg": "^8.11.3",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.34.0",

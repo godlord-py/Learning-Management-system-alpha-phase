@@ -15,7 +15,7 @@
             <div class="col-start-2 col-span-2 p-3 rounded-lg shadow">
                 <div class="py-4 flex flex-col m-3">
                     <div class="py-4 border-b-2 m-3 flex justify-between items-center">
-                        <h1 class="text-2xl font-bold text-gray-800">Welcome Teacher:  <%= locals.currentUser.firstName %>
+                        <h1 class="text-2xl font-bold text-gray-800">Welcome Educator!  <%= locals.currentUser.firstName %>
                             <%= currentUser.lastName %>
                         </h1>
                         <a href="/signout"
@@ -37,7 +37,7 @@
                     </div>
                     <hr class="my-4">
                 </div>
-
+                <%- include ('enroll.ejs', { currentUser, courses, users, enrols }) %>
                     <% if(messages && messages.error && messages.error.length> 0) { %>
                         <ul class="my-4">
                             <% for(var i=0; i<messages.error.length; i++) { %>

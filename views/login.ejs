@@ -11,21 +11,21 @@
     </head>
     <style>
         body {
-            background-color: rgb(104, 102, 102)
+            background-color: #686666
         }
     </style>
     <body> 
-        <div class = "grid grid-cols-6">
+        <div class = "grid grid-cols-6 mx-auto">
             <div class = "col-start-3 col-span-2">  
-                <div class = "font-3xl font-bold text-white "<%- include('header.ejs')%> </div>
-                <h6 class="py-4">Login</h6>
+                <div class = "text-3xl font-bold text-blue-400 justify-center"<%- include('header.ejs')%> </div>
+                <h6 class="py-4 text-2xl">Login into your account:</h6>
                 <form action="/logging" method= "post" >
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                    <div class = "py-3  " >
+                    <div class = "py-3 font-semibold " >
                     <label for="Email">Email:</label>
                     <input type = "email" name= "email" class = "border border-gray-900 text-gray-900 rounded p-4 w-full py-1" required>
                     </div>
-                    <div class = "py-3 " >
+                    <div class = "py-3 font-semibold " >
                     <label for="Password">Password:</label>
                     <input type = "password" name= "password" class = "border border-gray-900 text-gray-900 rounded p-4 w-full py-1" required>
                     </div>

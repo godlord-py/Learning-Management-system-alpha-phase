@@ -6,15 +6,17 @@ var csrf = require("csurf");
 const path = require("path");
 const bodyParser = require("body-parser");
 const port = process.env.PORT || 3000; 
+const methodOverride = require('method-override');
 const ejs = require('ejs');
 const { userInfo } = require("os");
+const csrfProtection = csrf();``
 const templatepath = path.join(__dirname, "views");
 const passport = require("passport");   
 const session = require('express-session');
 const flash = require("connect-flash");
 const LocalStrategy = require('passport-local');
 const {Users, Courses, Enrollments, Pages, Chapters} = require("./models");
-const connnectEnsureLogin = require("connect-ensure-login");
+const connectEnsureLogin = require("connect-ensure-login");
 const { connect } = require("http2");
 const saltRounds = 10;
 app.use(bodyParser.json());
@@ -22,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser("shh! some secret string")); 
 app.set("view engine", "ejs");
-
+app.use(methodOverride('_method'));
 app.use(session({
   secret: "my-super-secret-key-63693875353985691365693",
   resave: true,
@@ -195,11 +197,6 @@ app.get("/logout", (request, response) => {
     request.logout();
     response.redirect("/login");
   });
-app.get("/teacher", (req,res) => {
-  res.render("teacher", {
-  csrfToken: req.csrfToken(),
-  })
-});
 
 app.listen(port, () => {
   console.log("started");
@@ -207,7 +204,7 @@ app.listen(port, () => {
 
 app.get(
   "/student",
-  connnectEnsureLogin.ensureLoggedIn(), 
+  connectEnsureLogin.ensureLoggedIn(), 
   async (request, response) => {
     const currentUser = request.user;
     try {
@@ -229,10 +226,10 @@ app.get(
       return response.status(422).json(error);
     }
   },
-);
+);  
 app.get(
   "/teacher",
-  connnectEnsureLogin.ensureLoggedIn(),
+  connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     const currentUser = request.user;
     try {
@@ -266,18 +263,15 @@ app.get("/Password", (request, reponse) => {
 app.post("/Password", async (request, response) => {
   const userEmail = request.body.email;
   const newPassword = request.body.password;
-
   try {
-
     const user = await Users.findOne({ where: { email: userEmail } });
-
     if (!user) {
       request.flash("error", "User with that email does not exist.");
       return response.redirect("/Password");
     }
     const hashedPwd = await bcrypt.hash(newPassword, saltRounds);
     await user.update({ password: hashedPwd });
-
+ 
 
     return response.redirect("/login");
   } catch (error) {
@@ -288,7 +282,7 @@ app.post("/Password", async (request, response) => {
 });
 app.get(
   "/createcourse",
-  connnectEnsureLogin.ensureLoggedIn(),
+  connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     const currentUser = await Users.findByPk(request.user.id);
     response.render("createcourse", {
@@ -300,7 +294,7 @@ app.get(
 );
 app.post(
   "/createcourse",
-  connnectEnsureLogin.ensureLoggedIn(),
+  connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     if (request.body.courseName.length == 0) {
       request.flash("error", "Please Enter A Course Name!");
@@ -329,7 +323,7 @@ app.post(
 );
 app.get(
   "/studentcourses",
-  connnectEnsureLogin.ensureLoggedIn(),
+  connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     const currentUser = request.user;
     try {
@@ -354,7 +348,7 @@ app.get(
 );
 app.get(
   "/courses",
-  connnectEnsureLogin.ensureLoggedIn(),
+  connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     if (!request.isAuthenticated()) {
       return response.redirect("/login");
@@ -381,7 +375,7 @@ app.get(
 );
 app.get(
   "/studentcourses",
-  connnectEnsureLogin.ensureLoggedIn(),
+  connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     if (!request.isAuthenticated()) {
       return response.redirect("/login");
@@ -425,7 +419,7 @@ app.get("/viewcourses", (request, response) => {
 });
 app.get(
   "/report",
-  connnectEnsureLogin.ensureLoggedIn(),
+  connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     if (!request.isAuthenticated()) {
 
@@ -477,23 +471,27 @@ app.get("/view-course/:id", async (request, response) => {
     return response.status(500).json({ message: "Internal server error" });
   }
 });
-app.delete(
-  "/courses/:id", 
-  connnectEnsureLogin.ensureLoggedIn(),
+app.delete("/view-course/:id",
+  connectEnsureLogin.ensureLoggedIn(),
+  csrfProtection,
   async (request, response) => {
-    console.log("Delete: ", request.params.id);
-
+    console.log('Delete: ', request.params.id);
     try {
+      const csrfToken = request.csrfToken();
+      const clientToken = request.body._csrf || request.query._csrf || request.headers['x-csrf-token'];
+      if (!clientToken || clientToken !== csrfToken) { 
+        return response.status(403).json({ error: 'Invalid CSRF token' });
+      }
       const status = await Courses.remove(request.params.id);
       return response.json(status ? true : false);
     } catch (err) {
       return response.status(422).json(err);
-    } 
-  },
-);
+    }
+  }
+);   
 app.get(
   "/view-course/:id/viewcourse",
-  connnectEnsureLogin.ensureLoggedIn(),
+  connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     const courseId = request.params.id;
     const course = await Courses.findByPk(courseId);
@@ -515,7 +513,7 @@ app.get(
 
 app.post(
   "/view-course/:id/viewcourse",
-  connnectEnsureLogin.ensureLoggedIn(),
+  connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     const userId = request.body.userId;
     // if (request.body.chapterName.length == 0) {
@@ -547,7 +545,7 @@ app.post(
 );
 
 app.get("/view-course/:id/showpages", async (request, response) => {
-  connnectEnsureLogin.ensureLoggedIn();
+  connectEnsureLogin.ensureLoggedIn();
     const chapterId = request.params.id; 
     const chapter = await Chapters.findByPk(chapterId);
     const courseId =  chapterId; 
@@ -574,7 +572,7 @@ app.get("/view-course/:id/showpages", async (request, response) => {
 );
 app.post(
   "/view-course/:id/showpages",
-  connnectEnsureLogin.ensureLoggedIn(),
+  connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     const chapter = await Chapters.findByPk(request.body.chapterId);
     const chapterId = request.params.id; 
@@ -616,7 +614,7 @@ app.post(
 );
 app.post(
   "/enroll-course/:courseId",
-  connnectEnsureLogin.ensureLoggedIn(),
+  connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     const courseId = request.params.courseId;
     const currentUserId = request.query.currentUserId;
@@ -647,3 +645,4 @@ app.get("/signout", (request, response, next) => {
 });
 
 
+module.exports = app;
