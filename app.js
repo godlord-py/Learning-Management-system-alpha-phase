@@ -745,7 +745,7 @@ app.post("/view-course/:id/complete", async (request, response) => {
         isComplete: true,
       });
     }
-
+ 
     response.redirect(`/view-course/${courseId}/showpages?currentUserId=${userId}`);
   } catch (error) {
     console.error("Error marking page as complete", error);
