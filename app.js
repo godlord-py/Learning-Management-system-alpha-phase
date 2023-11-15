@@ -563,7 +563,7 @@ app.get("/view-course/:id/showpages", async (request, response) => {
     const pages = await Pages.findAll({ where: { chapterId } });  
     response.render("showpages", {  
       title: "Page",
-      chapterId,  
+      chapterId,   
       userId,
       courseId, 
       chapter,  

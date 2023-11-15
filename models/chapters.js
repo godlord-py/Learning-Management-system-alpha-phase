@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         })
     };
     static getChapters() {
-      return this.findAll()
+      return this.findAll() 
     }
     static associate(models) {
       // define association here
@@ -26,13 +26,13 @@ module.exports = (sequelize, DataTypes) => {
       }); 
       Chapters.hasMany(models.Pages, {
         foreignKey: "chapterId",
-      });
+      }); 
     }
-  }
+  } 
   Chapters.init({
     chapterName: DataTypes.STRING,
     chapterDescription: DataTypes.TEXT,
-    courseId: DataTypes.INTEGER
+    courseId: DataTypes.INTEGER 
   }, {
     sequelize,
     modelName: 'Chapters',

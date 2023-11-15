@@ -16,9 +16,8 @@ module.exports = {
       chapterDescription: {
         type: Sequelize.TEXT
       },
-      chapterId: {
+      courseId: {
         type: Sequelize.INTEGER,
-        autoIncrement: true,
       },
       createdAt: {
         allowNull: false, 
