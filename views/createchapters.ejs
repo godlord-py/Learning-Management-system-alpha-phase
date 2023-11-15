@@ -30,12 +30,12 @@
                 </h1>
                 <h1 class="text-black text-2xl font-semibold border-b-2 py-2 mb-4 transition-all">Create Chapter!
                 </h1>
-                <form action="/view-course/<%= courseId %>/showpages?currentUserId=<%= currentUser.id %>"
+                <form action="/view-course/<%= courseId %>/viewcourse?currentUserId=<%= currentUser.id %>"
                     method="post" autocomplete="on" class="space-y-4">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <input type="hidden" name="courseId" value="<%= courseId %>">
                     <div class="py-2">
-                        <label for="courseName" class="text-gray-900 text-lg font-medium transition-all">Chapter
+                        <label for="chapterName" class="text-gray-900 text-lg font-medium transition-all">Chapter
                             Name:</label>
                         <input type="text" name="chapterName" id="chapterName"
                             class="border border-gray-300 rounded p-2 w-full text-gray-900 text-lg transition-all"

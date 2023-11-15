@@ -19,6 +19,10 @@ module.exports = {
       courseId: {
         type: Sequelize.INTEGER,
       },
+      chapterId: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+      },
       createdAt: {
         allowNull: false, 
         type: Sequelize.DATE

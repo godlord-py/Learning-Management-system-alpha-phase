@@ -17,14 +17,8 @@ module.exports = (sequelize, DataTypes) => {
         userId,
         })
     };
-    static remove({id}) {
-      const index = Courses.findIndex(course => course.id === id);
-      if (index !== -1) {
-        Courses.splice(index, 1);
-        return true; // deleted
-      } else {
-        return false; //failed
-      }
+    static remove ({courseId}) {
+      return this.destroy({where: {courseId:courseId}})
     }
     static getCourses () {
       return this.findAll()

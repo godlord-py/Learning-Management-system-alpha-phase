@@ -10,9 +10,13 @@
         <%= title %>
     </title><script src="https://cdn.tailwindcss.com"></script> 
     <link rel="stylesheet" href="./css/styles.css">
-    
+    <style>
+        body {
+            background-color: #3a3838
+        }
+    </style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-700">
     <div class="grid grid-cols-4">
         <div class="col-start-2 col-span-2">
             <%- include('header.ejs') %>
@@ -31,11 +35,15 @@
                     <strong>Course: </strong>
                     <%= course.courseName %> <br>
                         <strong>Chapter: </strong>
-                        <%= chapter.chapterName %>
+                      
+                        
+                       
+                                   
                 </h1>
                 <ol class="m-4 space-y-4 list-decimal">
+                    <strong class= "text-2xl">Pages:</strong>
                     <% if (pages.length===0) { %>
-                        <h3 class="mb-5 text-2xl text-gray-600">---No pages available</h3>
+                        <h3 class="mb-5 text-2xl text-gray-700">---No pages available</h3>
                         <% } else { %>
                             <% for (let page of pages) { %>
                                 <li class="mb-5">
@@ -51,6 +59,10 @@
                                             <%= page.info %>
                                         </h3>
                                     </div>
+                                    <center><a href="/view-course/<%= course.id %>/page?currentUserId=<%= encodeURIComponent(currentUser.id) %>"
+                                        class="block bg-blue-500 text-white px-3 py-1 rounded mt-2 hover:bg-purple-700 transition-all">View
+                                        Page</a></center>
+
                                 </li>
                                 <% } %>
                                     <% } %>
@@ -64,16 +76,16 @@
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <input type="hidden" name="chapterId" value="<%= chapterId %>">
                         <div class="py-2">
-                            <label for="pageName" class="text-gray-900 text-lg font-medium transition-all">Page
+                            <label for="head" class="text-gray-900 text-lg font-medium transition-all">Page
                                 Title:</label>
-                            <input type="text" name="pageName" id="pageName"
+                            <input type="text" name="head" id="head"
                                 class="border border-gray-300 rounded p-2 w-full text-gray-900 text-lg transition-all"
                                 required />
                         </div>
                         <div class="py-2">
-                            <label for="pageDescription" class="text-gray-900 text-lg font-medium transition-all">Page
+                            <label for="info" class="text-gray-900 text-lg font-medium transition-all">Page
                                 Content:</label>
-                            <textarea name="pageDescription" id="pageDescription">
+                            <textarea name="info" id="info"
                                 class="border border-gray-300 rounded p-2 w-full h-36 text-gray-900 text-lg transition-all"
                                 required></textarea>
                         </div>

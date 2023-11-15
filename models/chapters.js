@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
   Chapters.init({
     chapterName: DataTypes.STRING,
     chapterDescription: DataTypes.TEXT,
-    UserId: DataTypes.INTEGER
+    courseId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Chapters',
