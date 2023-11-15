@@ -96,7 +96,7 @@
                                 </ol>
                                     <%if(currentUser.role === "student") { %>
                                         <p>You can't create a chapter as you are a student.</p>
-                                    <% } else { %>
+                                    <% } else if (course.userId===currentUser.id) && currentUser.role === "teacher" { %>
                                         <a href="/view-course/<%= course.id %>/viewcourse?currentUserId=<%= currentUser.id %>"
                                             class="bg-blue-600 text-white px-4 py-3 rounded text-xl hover:bg-red-700 text-center ml-8">Create
                                             a Chapter</a>
