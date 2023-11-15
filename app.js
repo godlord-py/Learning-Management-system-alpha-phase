@@ -576,7 +576,7 @@ app.get("/view-course/:id/showpages", async (request, response) => {
     });
   },
 );
-//create a page
+//create a page 
 app.post(
   "/view-course/:id/showpages",
   connectEnsureLogin.ensureLoggedIn(),

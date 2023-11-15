@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
       return this.create({
         chapterName:chapterName,
         chapterDescription:chapterDescription,
-        courseId,
         })
     };
     static getChapters() {
@@ -24,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Chapters.belongsTo(models.Courses, {
         foreignKey: "courseId",
-      });
+      }); 
       Chapters.hasMany(models.Pages, {
         foreignKey: "chapterId",
       });
