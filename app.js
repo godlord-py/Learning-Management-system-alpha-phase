@@ -212,14 +212,14 @@ app.get(
       const existingCourses = await Courses.findAll();
       const existingUsers = await Users.findAll();
       const existingEnrollments = await Enrollments.findAll();
-
-
+      const chapterId = request.params.id;
       response.render("student", {
         title: "Student Dashboard", 
         courses: existingCourses,
         users: existingUsers,
         enrols: existingEnrollments,
         currentUser,
+        chapterId,
         csrfToken: request.csrfToken(),
       });
     } catch (error) {
