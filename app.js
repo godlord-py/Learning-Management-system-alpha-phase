@@ -431,32 +431,41 @@ app.get(
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     if (!request.isAuthenticated()) {
-
       return response.redirect("/login");
     }
     try {
       const currentUser = request.user;
-      const isEnrolled = await Enrollments.findOne({
-        where: { userId: currentUser.id },
-      });
       if (!currentUser) {
-
         return response.status(404).json({ message: "User not found" });
       }
       const userCourses = await currentUser.getCourses();
+
+      // Fetch enrollment count for each course
+      const coursesWithEnrollmentCount = await Promise.all(
+        userCourses.map(async (course) => {
+          const enrollmentCount = await course.countEnrollments();
+          return { ...course, enrollmentCount };
+        })
+      );
+
+      // Get the total number of enrollments for all courses
+      const totalEnrollments = await Enrollments.count();
+
       response.render("report", {
         title: "Courses Report",
-        courses: userCourses,
+        courses: coursesWithEnrollmentCount,
+        totalEnrollments,
         currentUser,
-        isEnrolled,
         csrfToken: request.csrfToken(),
       });
     } catch (error) {
       console.error(error);
       return response.status(500).json({ message: "Internal server error" });
     }
-  },
+  }
 );
+
+
 //get viewcourses
 app.get("/view-course/:id", async (request, response) => {
   try {
