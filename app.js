@@ -435,7 +435,6 @@ app.get(
       return response.redirect("/login");
     }
     try {
-      const enrolledCourses = await Enrollments.findAll({where: { userId: currentUser.id }});
       const currentUser = request.user;
       const isEnrolled = await Enrollments.findOne({
         where: { userId: currentUser.id },
@@ -717,7 +716,7 @@ app.post("/view-course/:id/complete", async (request, response) => {
     console.log("courseId:", courseId);
     console.log("chapterId:", chapterId);
     console.log("pageId:", pageId);  
-    console.log("body:", request.body)
+    // console.log("body:", request.body)
     // Check for existing enrollment 
     const existingEnrollment = await Enrollments.findOne({
       where: { userId, courseId, chapterId, pageId },
