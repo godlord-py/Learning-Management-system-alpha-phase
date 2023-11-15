@@ -37,15 +37,15 @@
             <div class="mt-8">
                 <p class="text-2xl font-semibold mb-4">Courses with Enrollment:</p>
                 <ul class="space-y-6">
-                    <% for (let course of courses) { %>
+                    <% for (let item of courses) { %>
                         <li>
                             <div class="bg-gray-400 p-6 rounded-lg shadow-sm">
                                 <p class="text-2xl font-semibold">Course:</p>
-                                <p class="text-3xl font-bold mb-4"><%= course.courseName %></p>
+                                <p class="text-3xl font-bold mb-4"><%= item.course.courseName %></p>
                                 <p class="text-2xl font-semibold">Students Enrolled:</p>
-                                <p class="text-3xl font-bold mb-4"><%= totalEnrollments %></p>
+                                <p class="text-3xl font-bold mb-4"><%= item.enrollmentCount %></p>
                                 <center>
-                                    <a href="/view-course/<%= course.id %>?currentUserId=<%= encodeURIComponent(currentUser.id) %>"
+                                    <a href="/view-course/<%= item.course.id %>?currentUserId=<%= encodeURIComponent(currentUser.id) %>"
                                         class="block bg-green-500 text-white px-3 py-1 rounded mt-2 hover:bg-purple-700 transition-all">View Course</a>
                                 </center>
                             </div>
