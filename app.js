@@ -73,10 +73,10 @@ passport.use(
     },
   ),
 );
-
+//I serialized using email because it is unique and I deserialized using email because it is unique.
 passport.serializeUser((user, done) => {
   done(null, user.email);
-});
+}); 
 
 passport.deserializeUser((email, done) => {
   Users.findOne({ where: { email } })
@@ -194,6 +194,7 @@ app.post("/users", async (request , response) => {
       }
     },
   );
+  //logout
 app.get("/logout", (request, response) => {
     request.logout();
     response.redirect("/login");
@@ -202,7 +203,7 @@ app.get("/logout", (request, response) => {
 app.listen(port, () => {
   console.log("started");
 });
-
+//get student
 app.get(
   "/student",
   connectEnsureLogin.ensureLoggedIn(), 
@@ -228,6 +229,7 @@ app.get(
     }
   },
 );  
+//get teacher
 app.get(
   "/teacher",
   connectEnsureLogin.ensureLoggedIn(),
@@ -237,21 +239,20 @@ app.get(
       const existingCourses = await Courses.findAll();
       const existingUsers = await Users.findAll();
       const existingEnrollments = await Enrollments.findAll();
-
-
+      console.log(existingEnrollments)
       response.render("teacher", {
         title: "Teacher Dashboard",
         courses: existingCourses,
         users: existingUsers,
         enrols: existingEnrollments,
-        currentUser,
+        currentUser, 
         csrfToken: request.csrfToken(),
-      });
+      }); 
     } catch (error) {
       console.error(error);
-      return response.status(422).json(error);
+      return response.status(422).json(error); 
     }
-  },
+  }, 
 );
 app.get("/Password", (request, reponse) => {
   const currentUser = request.user;
@@ -261,6 +262,7 @@ app.get("/Password", (request, reponse) => {
     csrfToken: request.csrfToken(),
   });
 });
+//update password
 app.post("/Password", async (request, response) => {
   const userEmail = request.body.email;
   const newPassword = request.body.password;
@@ -281,6 +283,7 @@ app.post("/Password", async (request, response) => {
     return response.redirect("/Password");
   }
 });
+//get createcourse
 app.get(
   "/createcourse",
   connectEnsureLogin.ensureLoggedIn(),
@@ -293,6 +296,7 @@ app.get(
     });
   },
 );
+//create a course
 app.post(
   "/createcourse",
   connectEnsureLogin.ensureLoggedIn(),
@@ -322,6 +326,7 @@ app.post(
     }
   },
 );
+//get studentcourses
 app.get(
   "/studentcourses",
   connectEnsureLogin.ensureLoggedIn(),
@@ -347,6 +352,7 @@ app.get(
     }
   },
 );
+//get courses
 app.get(
   "/courses",
   connectEnsureLogin.ensureLoggedIn(),
@@ -374,6 +380,7 @@ app.get(
     }
   },
 );
+//get studentcourses
 app.get(
   "/studentcourses",
   connectEnsureLogin.ensureLoggedIn(),
@@ -418,6 +425,7 @@ app.get("/viewcourses", (request, response) => {
     csrfToken: request.csrfToken(),
   });
 });
+//get report
 app.get(
   "/report",
   connectEnsureLogin.ensureLoggedIn(),
@@ -449,6 +457,7 @@ app.get(
     }
   },
 );
+//get viewcourses
 app.get("/view-course/:id", async (request, response) => {
   try {
     const id = request.params.id;
@@ -476,11 +485,12 @@ app.get("/view-course/:id", async (request, response) => {
     return response.status(500).json({ message: "Internal server error" });
   }
 });
-
+//get createchapters
 app.get(
   "/view-course/:id/viewcourse",
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
+    const userId = request.user.id;
     const courseId = Number(request.params.id);
     const course = await Courses.findByPk(courseId);
     const userOfCourseId = course.userId;
@@ -498,18 +508,19 @@ app.get(
       title: "Chapters", 
       courseId,
       course,
+      userId,
       userOfCourse,
       currentUser,
       csrfToken: request.csrfToken(),
     });
   },
 );
-
+//create a chapter
 app.post(
   "/view-course/:id/viewcourse",
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
-    const userId = request.body.userId;
+    const userId = request.user.id;
     const courseId = Number(request.params.id);
     const course = await Courses.findByPk(courseId);
     const userOfCourseId = course.userId;
@@ -524,8 +535,8 @@ app.post(
         chapterDescription: request.body.chapterDescription,
         courseId: Number(request.body.courseId),
       });  
-      console.log(chapters)
-      console.log(request.body) 
+      // console.log(chapters)
+      // console.log(request.body) 
       response.redirect(
         `/view-course/${request.body.courseId}/?currentUserId=${request.query.currentUserId}`,
       );
@@ -533,26 +544,29 @@ app.post(
     } catch (error) {
       console.log(error); 
       return response.status(422).json(error);
-    }
+    } 
   },
 );
+//render showpages
 app.get("/view-course/:id/showpages", async (request, response) => {
   connectEnsureLogin.ensureLoggedIn();
+    const userId = request.user.id;
     const chapterId = Number(request.params.id); 
     const chapter = await Chapters.findByPk(chapterId);
     const courseId =  Number(request.params.id);  
     const course = await Courses.findByPk(courseId);
-    const userOfCourseId = course.userId;
+    const userOfCourseId = course.id;
     const userOfCourse = await Users.findByPk(userOfCourseId); 
     const existingEnrollments = await Enrollments.findAll();  
     const currentUserId = Number(request.query.currentUserId); 
     const currentUser = await Users.findByPk(decodeURIComponent(currentUserId));  
-    const pages = await Pages.findAll({ where: { chapterId } }); 
+    const pages = await Pages.findAll({ where: { chapterId } });  
     response.render("showpages", {  
       title: "Page",
       chapterId,  
+      userId,
       courseId, 
-      chapter, 
+      chapter,  
       pages, 
       course,
       enrolls: existingEnrollments, 
@@ -562,10 +576,12 @@ app.get("/view-course/:id/showpages", async (request, response) => {
     });
   },
 );
+//create a page
 app.post(
   "/view-course/:id/showpages",
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
+    const userId = request.user.id;
     const chapter = await Chapters.findByPk(request.body.chapterId);
     const chapterId = Number(request.params.id); 
     const courseId =  Number(request.params.id); 
@@ -577,7 +593,8 @@ app.post(
     const currentUser = await Users.findByPk(decodeURIComponent(currentUserId)); 
     const pages = await Pages.findAll({ where: { chapterId } });
     console.log(request.body)
-    console.log(chapterId)
+    console.log(chapterId) 
+    console.log(userId)
     try { 
       await Pages.create({ 
         head: request.body.head, 
@@ -594,6 +611,7 @@ app.post(
     }
   },
 );
+//enroll logic
 app.post(
   "/enroll-course/:courseId",
   connectEnsureLogin.ensureLoggedIn(),
@@ -615,7 +633,7 @@ app.post(
     response.redirect("/student");
   },
 );
-
+//get pages
 app.get("/view-course/:id/page", async (request, response) => {
   connectEnsureLogin.ensureLoggedIn();
     const chapterId = request.params.id; 
@@ -641,8 +659,10 @@ app.get("/view-course/:id/page", async (request, response) => {
       csrfToken: request.csrfToken(),
     });
 })
+//render pages
 app.post("/view-course/:id/page", async (request, response) => {
   connectEnsureLogin.ensureLoggedIn();
+    const userId = request.user.id;
     const chapterId = request.params.id; 
     const chapter = await Chapters.findByPk(chapterId);
     const courseId =  Number(request.params.id);  
@@ -657,6 +677,7 @@ app.post("/view-course/:id/page", async (request, response) => {
       title: "Pages",
       chapterId, 
       courseId,
+      userId,
       chapter,
       pages,
       course,
@@ -670,7 +691,7 @@ app.post("/view-course/:id/page", async (request, response) => {
 app.post("/view-course/:id/complete", async (request, response) => {
   connectEnsureLogin.ensureLoggedIn();
   try {
-    const userId = (request.body.userId);
+    const userId = (request.user.id);
     const courseId = (request.body.courseId);
     const chapterId = request.body.chapterId;
     const pageId =Number(request.body.pageId);
@@ -702,21 +723,32 @@ app.delete(
   async (request, response) => {
     const currentUserId = request.query.currentUserId;
     const userId = request.user.id;
+    const courseId = Number(request.params.id);
     console.log("UserId:", userId);
     console.log("CurrentUserId:", currentUserId);
     try {
-      const courseId = Number(request.params.id);
-      const foundCourse = await Courses.findByPk(courseId); 
-      if (!foundCourse) {
+      // Step 1: Find the course by its ID
+      const foundCourse = await Courses.findByPk(courseId);
+      
+      if (!foundCourse) { 
         // Handle the case where the course is not found 
         return response.status(404).json({ error: "Course not found" });
       }
+
+      // Step 2: Find all chapters associated with the course
       const chapters = await Chapters.findAll({ where: { courseId: foundCourse.id } });
+
+      // Step 3: Delete all pages associated with each chapter
       for (const chapter of chapters) {
         await Pages.destroy({ where: { chapterId: chapter.id } });
       }
+      // Step 4: Delete all chapters associated with the course
       await Chapters.destroy({ where: { courseId: foundCourse.id } });
-      const output = await Courses.remove(foundCourse);
+
+      // Step 5: Finally, remove the course itself
+      const output = await Courses.destroy({ where: { id: foundCourse.id } });
+
+      // Step 6: Return the response
       return response.json(output ? true : false);
     } catch (err) {
       console.error(err);

@@ -6,7 +6,7 @@ module.exports = {
       id: {
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: true, 
         type: Sequelize.INTEGER
       },
       userId: {
@@ -15,10 +15,7 @@ module.exports = {
       courseId: {
         type: Sequelize.INTEGER
       },
-      pageId: {
-        type: Sequelize.STRING
-      },
-      completed: {
+      isComplete: {
         type: Sequelize.BOOLEAN
       },
       createdAt: {

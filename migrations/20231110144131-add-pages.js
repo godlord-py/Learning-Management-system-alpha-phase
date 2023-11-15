@@ -4,7 +4,7 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.createTable('Pages', {
-      id: {
+      id: { 
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -15,6 +15,9 @@ module.exports = {
       },
       info: {
         type: Sequelize.TEXT,
+      },
+      chapterId: {
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
