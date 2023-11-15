@@ -475,7 +475,7 @@ app.get("/view-course/:id", async (request, response) => {
       title: "view course",
       course,
       chapters,
-      userofCourse,
+      userofCourse,  
       enrolls: existingEnrollments,
       currentUser,
       csrfToken: request.csrfToken(), 
@@ -553,14 +553,29 @@ app.get("/view-course/:id/showpages", async (request, response) => {
     const userId = request.user.id;
     const chapterId = Number(request.params.id); 
     const chapter = await Chapters.findByPk(chapterId);
-    const courseId =  Number(request.params.id);  
+    const courseId =  Number(request.params.id);   
     const course = await Courses.findByPk(courseId);
-    const userOfCourseId = course.id;
+    const userOfCourseId = course.userId;
+    console.log(userOfCourseId)
     const userOfCourse = await Users.findByPk(userOfCourseId); 
     const existingEnrollments = await Enrollments.findAll();  
     const currentUserId = Number(request.query.currentUserId); 
     const currentUser = await Users.findByPk(decodeURIComponent(currentUserId));  
-    const pages = await Pages.findAll({ where: { chapterId } });  
+    const pages = await Pages.findAll({ where: { chapterId } }); 
+    try {
+      const userOfCourse = await Users.findByPk(userOfCourseId);
+      console.log('userOfCourse:', userOfCourse); // Debugging statement
+    
+      if (userOfCourse) {
+        // ... (existing code with rendering) 
+      } else {
+        console.error('User of Course not found.');
+        // Handle the case where the user is not found, perhaps redirect or show an error page.
+      }
+    } catch (error) {
+      console.error('Error fetching userOfCourse:', error);
+      // Handle the error, perhaps redirect or show an error page.
+    } 
     response.render("showpages", {  
       title: "Page",
       chapterId,   
@@ -691,24 +706,38 @@ app.post("/view-course/:id/page", async (request, response) => {
 app.post("/view-course/:id/complete", async (request, response) => {
   connectEnsureLogin.ensureLoggedIn();
   try {
-    const userId = (request.user.id);
-    const courseId = (request.body.courseId);
+    const userId = request.user.id;
+    const courseId = request.body.courseId;
     const chapterId = request.body.chapterId;
-    const pageId =Number(request.body.pageId);
-    console.log(pageId);
-    console.log(userId);
-    console.log(courseId); 
-    console.log(chapterId);
-    await Enrollments.create({
-      userId, 
-      courseId,
-      chapterId,
-      pageId,
-      isComplete: true,  
-    }); 
-      response.redirect(
-        `/view-course/${courseId}/showpages?currentUserId=${userId}`,
-      );
+    const pageId = Number(request.body.pageId);
+
+    console.log("Received parameters:");
+    console.log("userId:", userId);
+    console.log("courseId:", courseId);
+    console.log("chapterId:", chapterId);
+    console.log("pageId:", pageId);
+
+    // Check for existing enrollment
+    const existingEnrollment = await Enrollments.findOne({
+      where: { userId, courseId, chapterId, pageId },
+    });
+
+    if (existingEnrollment) {
+      // Update the existing enrollment if necessary
+      existingEnrollment.isComplete = true;
+      await existingEnrollment.save();
+    } else {
+      // Create a new enrollment
+      await Enrollments.create({
+        userId,
+        courseId,
+        chapterId,
+        pageId,
+        isComplete: true,
+      });
+    }
+
+    response.redirect(`/view-course/${courseId}/showpages?currentUserId=${userId}`);
   } catch (error) {
     console.error("Error marking page as complete", error);
     response
@@ -716,6 +745,7 @@ app.post("/view-course/:id/complete", async (request, response) => {
       .send("An error occurred while marking the page as complete");
   }
 });
+
 
 app.delete(
   "/view-course/:id/delete",
