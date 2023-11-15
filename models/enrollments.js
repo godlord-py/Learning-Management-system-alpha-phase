@@ -22,6 +22,8 @@ module.exports = (sequelize, DataTypes) => {
   Enrollments.init({
     userId: DataTypes.INTEGER,
     courseId: DataTypes.INTEGER,
+    chapterId: DataTypes.INTEGER,
+    pageId: DataTypes.INTEGER,
     isComplete: DataTypes.BOOLEAN, 
   }, {
     sequelize,

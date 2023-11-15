@@ -15,6 +15,12 @@ module.exports = {
       courseId: {
         type: Sequelize.INTEGER
       },
+      chapterId: {
+        type: Sequelize.INTEGER
+      },
+      pageId: {
+        type: Sequelize.INTEGER
+      },
       isComplete: {
         type: Sequelize.BOOLEAN
       },

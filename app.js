@@ -435,6 +435,7 @@ app.get(
       return response.redirect("/login");
     }
     try {
+      const enrolledCourses = await Enrollments.findAll({where: { userId: currentUser.id }});
       const currentUser = request.user;
       const isEnrolled = await Enrollments.findOne({
         where: { userId: currentUser.id },
@@ -556,7 +557,7 @@ app.get("/view-course/:id/showpages", async (request, response) => {
     const courseId =  Number(request.params.id);   
     const course = await Courses.findByPk(courseId);
     const userOfCourseId = course.userId;
-    console.log(userOfCourseId)
+    // console.log(userOfCourseId)
     const userOfCourse = await Users.findByPk(userOfCourseId); 
     const existingEnrollments = await Enrollments.findAll();  
     const currentUserId = Number(request.query.currentUserId); 
@@ -592,7 +593,7 @@ app.get("/view-course/:id/showpages", async (request, response) => {
   },
 );
 //create a page 
-app.post(
+app.post( 
   "/view-course/:id/showpages",
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
@@ -607,9 +608,9 @@ app.post(
     const currentUserId = Number(request.query.currentUserId);
     const currentUser = await Users.findByPk(decodeURIComponent(currentUserId)); 
     const pages = await Pages.findAll({ where: { chapterId } });
-    console.log(request.body)
-    console.log(chapterId) 
-    console.log(userId)
+    // console.log(request.body)
+    // console.log(chapterId) 
+    // console.log(userId)
     try { 
       await Pages.create({ 
         head: request.body.head, 
@@ -715,24 +716,24 @@ app.post("/view-course/:id/complete", async (request, response) => {
     console.log("userId:", userId);
     console.log("courseId:", courseId);
     console.log("chapterId:", chapterId);
-    console.log("pageId:", pageId);
-
-    // Check for existing enrollment
+    console.log("pageId:", pageId);  
+    console.log("body:", request.body)
+    // Check for existing enrollment 
     const existingEnrollment = await Enrollments.findOne({
       where: { userId, courseId, chapterId, pageId },
     });
 
-    if (existingEnrollment) {
+    if (existingEnrollment) {  
       // Update the existing enrollment if necessary
       existingEnrollment.isComplete = true;
       await existingEnrollment.save();
-    } else {
+    } else { 
       // Create a new enrollment
       await Enrollments.create({
         userId,
         courseId,
         chapterId,
-        pageId,
+        pageId,  
         isComplete: true,
       });
     }
