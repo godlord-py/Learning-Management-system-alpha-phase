@@ -35,8 +35,6 @@ const login = async (agent, username, password) => {
         console.log(error);
       } 
     })
-
-
 test("Sign up as Teacher", async () => {
     let reponse = await agent.get("/signup");
     const csrfToken = extractCsrfToken(reponse);
@@ -56,36 +54,37 @@ test("Sign up as Teacher", async () => {
     reponse = await agent.post("/users").send({
       firstName: "Test",
       lastName: "Users",
-      email: "user.b@gmail.com",
+      email: "user.b@test.com",
       password: "12345678",
       _csrf: csrfToken,
       submit: "student",  
     });
     expect(reponse.statusCode).toBe(302);
   });
-  test("Password Changed Successfully!", async () => {
-    await login(agent, "user.a@test.com", "12345678");
-    let response = await agent.get("/Password");
-    const csrfToken = extractCsrfToken(response);
-    const email = "user.a@test.com";
-    const newPassword = "newPassword123";
-    response = await agent.post("/Password").send({
-      email: email,
-      password: newPassword,
-      _csrf: csrfToken,
-      submit: newPassword,
-    });
-    expect(response.statusCode).toBe(302);
+
+  test("view enrolled courses for a student", async () => {
+    await login(agent, "user.b@test.com", "12345678");
+    const courses = await agent.get("/studentcourses");
+    expect(courses.statusCode).toBe(302);
   });
-  
-  test("Sign out", async () => {
-    response = await agent.get("/signout");
-    expect(response.statusCode).toBe(302);
-    response = await agent.get("/login");
-    expect(response.statusCode).toBe(200);
+  test("view teacher's dashboard", async () => {
+    await login(agent, "user.a@test.com", "12345678");
+
+    const teacher = await agent.get("/teacher");
+    expect(teacher.statusCode).toBe(302);
+  });
+  test("view student's dashboard", async () => {
+    await login(agent, "user.b@test.com", "12345678");
+    const student = await agent.get("/student");
+    expect(student.statusCode).toBe(302);
+  });
+  test("View teacher's report", async () => {
+    await login(agent, "user.a@test.com", "12345678");
+    const teacher = await agent.get("/report");
+    expect(teacher.statusCode).toBe(302);
   });
   test("should create a new course", async () => {
-    await login(agent, "user.a@example.com", "12345678");
+    await login(agent, "user.a@test.com", "12345678");
 
     const csrfToken = extractCsrfToken(await agent.get("/createcourse"));
     const newCourse = {
@@ -96,21 +95,28 @@ test("Sign up as Teacher", async () => {
     const newcourse = await agent.post("/createcourse").send(newCourse);
     expect(newcourse.statusCode).toBe(403);
   });
+  test("Change Password", async () => {
+    await login(agent, "user.a@test.com", "12345678");
+    const csrfToken = extractCsrfToken(await agent.get("/Password"));
+    const password = {
+      currentPassword: "12345678",
+      newPassword: "123456789",
+      _csrf: csrfToken,
+    };
+    const response = await agent.post("/Password").send(password);
+    expect(response.statusCode).toBe(403);
 
-  test("view enrolled courses for a student", async () => {
-    await login(agent, "user.b@example.com", "12345678");
-    const courses = await agent.get("/studentcourses");
+  });
+  test("View all courses", async () => {
+    await login(agent, "user.a@test", "12345678");
+    const courses = await agent.get("/courses");
     expect(courses.statusCode).toBe(302);
   });
-  test("view teacher's dashboard", async () => {
-    await login(agent, "user.a@example.com", "12345678");
-
-    const teacher = await agent.get("/teacher");
-    expect(teacher.statusCode).toBe(302);
-  });
-  test("view student's dashboard", async () => {
-    await login(agent, "user.b@gmail.com", "12345678");
-    const student = await agent.get("/student");
-    expect(student.statusCode).toBe(302);
+  test("Sign out", async () => {
+    response = await agent.get("/signout");
+    expect(response.statusCode).toBe(302);
+    response = await agent.get("/login");
+    expect(response.statusCode).toBe(200);
   });
 });
+
