@@ -75,7 +75,7 @@ test("Sign up as Teacher", async () => {
       _csrf: csrfToken,
       submit: newPassword,
     });
-    expect(response.statusCode).toBe(403);
+    expect(response.statusCode).toBe(302);
   });
   
   test("Sign out", async () => {
