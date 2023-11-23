@@ -148,11 +148,11 @@ app.post("/users", async (request , response) => {
     request.flash("error", "Your password is too short. Need atleast 8 characters to make it stronger");
     return response.redirect("/signup");
   }
-    const hashedpwd = await bcrypt.hash(request.body.password, saltRounds)
-    try {
+    const hashedpwd = await bcrypt.hash(request.body.password, saltRounds) 
+    try {  
     const User = await Users.create({
       firstName: request.body.firstName,
-      lastName: request.body.lastName,
+      lastName: request.body.lastName, 
       email: request.body.email,
       password: hashedpwd,
       role: request.body.role,

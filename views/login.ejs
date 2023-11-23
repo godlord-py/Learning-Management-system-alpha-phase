@@ -33,6 +33,11 @@
                     <button type = "submit" class = "px-5 py-1.5 rounded background-color: bg-red-600 text-white font-medium mr-2 mb-2">Login</button>
                     </div>
                 </form>
+                <% if (messages && messages.error && messages.error.length > 0) { %>
+                    <div class="error-message">
+                      <%= messages.error[0] %>
+                    </div>
+                  <% } %>
                 <%- include ('footer.ejs') %>
             </div>
         </div>  
