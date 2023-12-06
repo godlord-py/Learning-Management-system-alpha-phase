@@ -112,6 +112,7 @@ test("Sign up as Teacher", async () => {
     const courses = await agent.get("/courses");
     expect(courses.statusCode).toBe(302);
   });
+
   test("Sign out", async () => {
     response = await agent.get("/signout");
     expect(response.statusCode).toBe(302);

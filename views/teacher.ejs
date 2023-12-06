@@ -8,11 +8,26 @@
     <script src="https://cdn.tailwindcss.com" rel="stylesheet"></script>
     <link rel="stylesheet" href="./css/styles.css">
     <title>Teacher Dashboard</title>
+    <style>
+        .body
+        {
+            background-color: #3d3208;
+        }
+        .box {
+            background-size: cover;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .h1 {
+            padding: 6rem 6rem;
+        }
+    </style>
 </head>
-<body class="bg-gray-900">
+<body class="body">
     <div class="container mx-auto py-4 bg-blue-200">
         <% include ('header.ejs') %>
-            <div class="col-start-2 col-span-2 p-3 rounded-lg shadow">
+            <div class=" box col-start-2 col-span-2 p-3 rounded-lg shadow">
                 <div class="py-4 flex flex-col m-3">
                     <div class="py-4 border-b-2 m-3 flex justify-between items-center">
                         <h1 class="text-2xl font-bold text-gray-800">Welcome Educator!  <%= locals.currentUser.firstName %>
@@ -37,6 +52,7 @@
                     </div>
                     <hr class="my-4">
                 </div>
+                </div>
                 <%- include ('enroll.ejs', { currentUser, courses, users, enrols }) %>
                     <% if(messages && messages.error && messages.error.length> 0) { %>
                         <ul class="my-4">
@@ -47,7 +63,7 @@
                                 <% } %>
                         </ul>
                         <% } %>
-            </div>
+           
     </div>
 </body>
 

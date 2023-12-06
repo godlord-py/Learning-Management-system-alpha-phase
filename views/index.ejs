@@ -1,33 +1,120 @@
-<!DOCTYPE html>  
-<html lang=" "en>
-    <head>
-        <meta charset = "UTF-8">
-        <title
-        >Learning Management System</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
-        <meta name="csrf-token" content="<%= csrfToken %>">
-        <link rel="stylesheet" href="/css/styles.css">
-        <script src="https://cdn.tailwindcss.com"></script> 
-    </head>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Learning Management System</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= csrfToken %>">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script> 
     <style>
         body {
-            background-color: #686666;
+            background: url('https://i1.pickpik.com/photos/916/460/15/dark-gloomy-books-pages-preview.jpg') no-repeat center center fixed;
+            background-size: cover;
             display: flex;
             align-items: center;
             justify-content: center;
+            height: 100vh;
+            margin: 0;
         }
-      
+
+        .container {
+            text-align: center;
+            max-width: 700px;
+            width: 100%;
+            margin-top: 100px;
+
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #f12e2e;
+            margin-bottom: 1rem;
+            padding: 0.5rem 2rem;
+            border: 2px solid #000000;
+            border-radius: 50px;
+            box-shadow: 0px 0px 45px #f20101;
+            position: absolute;
+            top: 16%;
+            left: 50%;
+            transform: translate(-50%, -80%);
+        }
+
+
+        .link-btn {
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            font-size: 1.25rem;
+            color: #000000;
+            background-color: #4CAF50;
+            border: 2px solid #4CAF50;
+            border-radius: 15px;
+            transition: background-color 0.3s, color 0.3s; 
+            position: absolute;
+            top: 47%;
+            left: 65%;
+            transform: translate(-50%, -50%);
+        }
+        .link-btn2 {
+            display: inline-block;
+            padding: 0.2rem 1.68rem;
+            font-size: 1.25rem;
+            color: #000000;
+            background-color: #4CAF50;
+            border: 2px solid #4CAF50;
+            border-radius: 15px;
+            transition: background-color 0.3s, color 0.3s; 
+            position: absolute;
+            top: 61%;
+            left: 65%;
+            transform: translate(-50%, -50%);
+        }
+
+        .link-btn:hover {
+            background-color: #ffffff;
+            color: #4CAF50;
+        }
+        .link-btn2:hover {
+            background-color: #ffffff;
+            color: #4CAF50;
+        }
+        .subtitle {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 2rem;
+            padding: 0.5rem 2rem;
+            
+        }
+        .subtitle2 {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 3rem;
+            padding: 0.75rem 2rem;
+            
+        }
+        .logo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 10px;
+            border-radius: 50%;
+        }
     </style>
-    <body> 
-        <div class = "grid grid-cols-6 px-8 py-8 flex font-semibold flex mx-auto">
-            <div class = "col-start-3 col-span-2 py-4"> 
-                <div class = "font-bold text-4xl text-blue-400"> <%- include('header.ejs')%></div> 
-                <p class="py-4 text-3xl">New Here? <a href = "/signup" class="text-green-600 text-2xl px-4 hover:text-blue-500 bg-gray-900">Sign-up Now</a></p>
-                <p class="py-4 text-3xl">Already have an account? <a href = "/login" class="text-green-600 text-2xl px-1 hover:text-blue-500 bg-gray-900">Login Now</a></p>
-               <div class = "text-2xl pxy-6"> <%- include ('footer.ejs') %></div>
-            </div>
-        </div> 
-    </body>
+</head>
+
+<body>
+    <img src="https://yt3.googleusercontent.com/ytc/APkrFKaB0Z2UMylPdyZitqCUd8VCr9pBsxwfOtOafAK8rg=s176-c-k-c0x00ffffff-no-rj" class = " logo px-3 py-3 h-20 " alt="logo" width="100" draggable="false" height="100">
+    <div class="container">
+        <div class="title"><%- include('header.ejs') %></div>
+        <p class="subtitle">New Here?  <a href="/signup" class="link-btn">Sign-up Now</a></p>
+        <p class="subtitle2">Already have an account? <a href="/login" class="link-btn2">Login Now</a>
+        </p>
+    </div>
+
+</body>
+
 </html>
- 

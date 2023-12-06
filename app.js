@@ -19,7 +19,7 @@ const {Users, Courses, Enrollments, Pages, Chapters} = require("./models");
 const connectEnsureLogin = require("connect-ensure-login");
 const { connect } = require("http2");
 const chapters = require("./models/chapters");
-const saltRounds = 10; 
+const saltRounds = 10;  
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.urlencoded({ extended: false }));

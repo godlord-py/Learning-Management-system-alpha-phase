@@ -11,15 +11,35 @@
     </head>
     <style>
         body{
-        background-color: #686666
+            background-color: #1e1659;
+        }
+        .head{
+            justify-content: center;
+            color: #f8f8f8;
+        }
+        .role {
+        
+            color: #f3f5fb;
+        }
+        .realhead {
+            justify-content: center;
+            color: #e83e13;
+            font-size: 2rem;
+
+        }
+        .h6 {
+            justify-content: center;
+            font-size: 1.5rem;
+            color:#da440d;
+            padding: 1rem 6rem;
         }
     </style>
     <body> 
         <div class = "grid grid-cols-6">
-            <div class = "col-start-3 col-span-2">  
-                <%- include('header.ejs')%>
-                <h6 class="py-4">Sign-up as a new user</h6>
-                <p class="py-2 text-lg border-b-2 mb-2">Already have an account? <a href="/login" class="text-green-600 font-semibold hover:underline">Sign-in</a></p>
+            <div class = "head col-start-3 col-span-2">  
+                <div class = realhead><%- include('header.ejs')%></div>
+                <h6 class=" h6 py-4">Sign-up as a new user</h6>
+                <p class="py-2 text-lg border-b-2 mb-2">Already have an account? <a href="/login" class="text-green-600 font-semibold hover:underline bg-gray-900">Sign-in</a></p>
                 <form action="/users" method= "post">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <div class = "py-3 " >
@@ -36,10 +56,10 @@
                     </div>
                     <div class = "py-3 " >
                     <label for="Password">Password:</label>
-                    <input type = "password" name= "password" class = "border border-gray-900 text-gray-900 rounded p-4 w-full py-1" required minlength="8>
+                    <input type = "password" name= "password" class = "border border-gray-900 text-gray-900 rounded p-4 w-full py-1" required minlength="8">
                     </div>
-                        <div class="py-2">
-                        <label for="role" class="text-gray-900 text-lg">Role:</label>
+                        <div class=" role py-2">
+                        <label for="role" class="text-lg">Role:</label>
                         <select name="role" id="role" class="border border-gray-300 rounded p-2 w-full text-gray-900 text-lg" required>
                             <option value="null">Please select</option>
                             <option value="teacher">Teacher</option>
@@ -47,7 +67,7 @@
                         </select>
                     </div>
                     <div class = "py-3 " >
-                    <button type = "submit" class = "px-5 py-1.5 rounded background-color: bg-red-600 text-white font-medium mr-2 mb-2">Sign up</button>
+                    <button type = "submit" class = "px-5 py-1.5 rounded background-color: bg-red-600 text-white font-medium mr-2 mb-2 hover:text-blue-400">Sign up</button>
                     </div>
                 </form>
                 <% if (messages && messages.error && messages.error.length > 0) { %>

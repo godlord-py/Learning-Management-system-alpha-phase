@@ -1,45 +1,51 @@
 <!DOCTYPE html>  
-<html lang=" "en>
-    <head>
-        <meta charset = "UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
-        <meta name="csrf-token" content="<%= csrfToken %>">
-        <title>Login</title>
-        <link rel="stylesheet" href="/css/styles.css">
-        <script src="https://cdn.tailwindcss.com"></script> 
-    </head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= csrfToken %>">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
     <style>
-        body {
-            background-color: #686666
+        .page {
+            background-image: url('/views/nphrgz8yfnjylrwfr0yl.jpg');
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: rgb(168, 117, 80);
+            margin: 0;
         }
     </style>
-    <body> 
-        <div class = "grid grid-cols-6 mx-auto">
-            <div class = "col-start-3 col-span-2">  
-                <div class = "text-3xl font-bold text-blue-400 justify-center"<%- include('header.ejs')%> </div>
-                <h6 class="py-4 text-2xl">Login into your account:</h6>
-                <form action="/logging" method= "post" >
-                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                    <div class = "py-3 font-semibold " >
-                    <label for="Email">Email:</label>
-                    <input type = "email" name= "email" class = "border border-gray-900 text-gray-900 rounded p-4 w-full py-1" required>
-                    </div>
-                    <div class = "py-3 font-semibold " >
-                    <label for="Password">Password:</label>
-                    <input type = "password" name= "password" class = "border border-gray-900 text-gray-900 rounded p-4 w-full py-1" required>
-                    </div>
-                    <div class = "py-3 " >
-                    <button type = "submit" class = "px-5 py-1.5 rounded background-color: bg-red-600 text-white font-medium mr-2 mb-2">Login</button>
-                    </div>
-                </form>
-                <% if (messages && messages.error && messages.error.length > 0) { %>
-                    <div class="error-message">
-                      <%= messages.error[0] %>
-                    </div>
-                  <% } %>
-                <%- include ('footer.ejs') %>
-            </div>
-        </div>  
-    </body>
+</head>
+<body class="page">
+    <div class="grid grid-cols-6 mx-auto">
+        <div class="col-start-3 col-span-2 bg-gray-600 p-8 rounded-md">
+            <div class="text-3xl font-bold text-blue-400 text-center mb-4"><%- include('header.ejs') %></div>
+            <h6 class="text-2xl mb-4">Login into your account:</h6>
+            <form action="/logging" method="post">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-900 font-semibold">Email:</label>
+                    <input type="email" name="email" class="border border-gray-900 text-gray-900 rounded p-4 w-full" required>
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="block text-gray-900 font-semibold">Password:</label>
+                    <input type="password" name="password" class="border border-gray-900 text-gray-900 rounded p-4 w-full" required>
+                </div>
+                <div class="mb-6">
+                    <button type="submit" class="px-5 py-2 rounded bg-red-600 text-white font-medium">Login</button>
+                </div>
+            </form>
+            <% if (messages && messages.error && messages.error.length > 0) { %>
+                <div class="text-red-600">
+                    <%= messages.error[0] %>
+                </div>
+            <% } %>
+            
+        </div>
+    </div>
+</body>
 </html>
