@@ -23,12 +23,12 @@
 
         .container {
             text-align: center;
-            max-width: 700px;
             width: 100%;
             margin-top: 100px;
+            background-color: rgba(128, 102, 84, 0.8);
+            border-radius: 100px;
 
         }
-
         .title {
             font-size: 3rem;
             font-weight: bold;
@@ -37,7 +37,7 @@
             padding: 0.5rem 2rem;
             border: 2px solid #000000;
             border-radius: 50px;
-            box-shadow: 0px 0px 45px #f20101;
+            box-shadow: 0px 0px 30px #f20101;
             position: absolute;
             top: 16%;
             left: 50%;
@@ -83,13 +83,15 @@
             color: #4CAF50;
         }
         .subtitle {
+            font-weight: bold;
             font-size: 1.5rem;
-            color: #ffffff;
+            color: rgb(255, 255, 255);
             margin-bottom: 2rem;
             padding: 0.5rem 2rem;
             
         }
         .subtitle2 {
+            font-weight: bold;
             font-size: 1.5rem;
             color: #ffffff;
             margin-bottom: 3rem;
@@ -110,9 +112,9 @@
     <img src="https://yt3.googleusercontent.com/ytc/APkrFKaB0Z2UMylPdyZitqCUd8VCr9pBsxwfOtOafAK8rg=s176-c-k-c0x00ffffff-no-rj" class = " logo px-3 py-3 h-20 " alt="logo" width="100" draggable="false" height="100">
     <div class="container">
         <div class="title"><%- include('header.ejs') %></div>
-        <p class="subtitle">New Here?  <a href="/signup" class="link-btn">Sign-up Now</a></p>
-        <p class="subtitle2">Already have an account? <a href="/login" class="link-btn2">Login Now</a>
-        </p>
+        <p class="subtitle">New Here?</p> <a href="/signup" class="link-btn">Sign-up Now</a>
+        <p class="subtitle2">Already have an account?</p> <a href="/login" class="link-btn2">Login Now</a>
+        
     </div>
 
 </body>
