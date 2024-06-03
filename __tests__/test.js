@@ -12,9 +12,9 @@ function extractCsrfToken(res) {
 }
 
 const login = async (agent, username, password) => {
-    let reponse = await agent.get("/login");
-    let csrfToken = extractCsrfToken(reponse);
-    res = await agent.post("/session").send({
+    let response = await agent.get("/login");
+    let csrfToken = extractCsrfToken(response);
+    res = await agent.post("/session").send({ 
       email: username ,
       password: password,
       _csrf: csrfToken,
@@ -36,9 +36,9 @@ const login = async (agent, username, password) => {
       } 
     })
 test("Sign up as Teacher", async () => {
-    let reponse = await agent.get("/signup");
-    const csrfToken = extractCsrfToken(reponse);
-    reponse = await agent.post("/users").send({
+    let response = await agent.get("/signup");
+    const csrfToken = extractCsrfToken(response);
+    response = await agent.post("/users").send({
       firstName: "Test",
       lastName: "Users",
       email: "user.a@test.com",
@@ -46,12 +46,12 @@ test("Sign up as Teacher", async () => {
       _csrf: csrfToken,
       submit: "educator",
     });
-    expect(reponse.statusCode).toBe(302);
+    expect(response.statusCode).toBe(302);
   });
   test("Sign up as Student", async () => {
-    let reponse = await agent.get("/signup");
-    const csrfToken = extractCsrfToken(reponse);
-    reponse = await agent.post("/users").send({
+    let response = await agent.get("/signup");
+    const csrfToken = extractCsrfToken(response);
+    response = await agent.post("/users").send({
       firstName: "Test",
       lastName: "Users",
       email: "user.b@test.com",
@@ -59,7 +59,7 @@ test("Sign up as Teacher", async () => {
       _csrf: csrfToken,
       submit: "student",  
     });
-    expect(reponse.statusCode).toBe(302);
+    expect(response.statusCode).toBe(302);
   });
 
   test("view enrolled courses for a student", async () => {
@@ -118,114 +118,6 @@ test("Sign up as Teacher", async () => {
     expect(response.statusCode).toBe(302);
     response = await agent.get("/login");
     expect(response.statusCode).toBe(200);
-  });
-  it('view enrolled courses for a student', () => {
-    login('user.b@test.com', '12345678');
-    cy.request({
-      method: 'GET',
-      url: '/studentcourses',
-    }).then((response) => {
-      expect(response.status).to.eq(302);
-    });
-  });
-
-  it("view teacher's dashboard", () => {
-    login('user.a@test.com', '12345678');
-    cy.request({
-      method: 'GET',
-      url: '/teacher',
-    }).then((response) => {
-      expect(response.status).to.eq(302);
-    });
-  });
-
-  it("view student's dashboard", () => {
-    login('user.b@test.com', '12345678');
-    cy.request({
-      method: 'GET',
-      url: '/student',
-    }).then((response) => {
-      expect(response.status).to.eq(302);
-    });
-  });
-
-  it("View teacher's report", () => {
-    login('user.a@test.com', '12345678');
-    cy.request({
-      method: 'GET',
-      url: '/report',
-    }).then((response) => {
-      expect(response.status).to.eq(302);
-    });
-  });
-
-  it('should create a new course', () => {
-    login('user.a@test.com', '12345678');
-    cy.request({
-      method: 'GET',
-      url: '/createcourse',
-    }).then((response) => {
-      const csrfToken = extractCsrfToken(response);
-      cy.request({
-        method: 'POST',
-        url: '/createcourse',
-        form: true,
-        body: {
-          courseName: 'Testing in LMS',
-          courseDescription: 'Description for testing.',
-          _csrf: csrfToken,
-        },
-      }).then((response) => {
-        expect(response.status).to.eq(403);
-      });
-    });
-  });
-
-  it('Change Password', () => {
-    login('user.a@test.com', '12345678');
-    cy.request({
-      method: 'GET',
-      url: '/Password',
-    }).then((response) => {
-      const csrfToken = extractCsrfToken(response);
-      cy.request({
-        method: 'POST',
-        url: '/Password',
-        form: true,
-        body: {
-          currentPassword: '12345678',
-          newPassword: '123456789',
-          _csrf: csrfToken,
-        },
-      }).then((response) => {
-        expect(response.status).to.eq(403);
-      });
-    });
-  });
-
-  it('View all courses', () => {
-    login('user.a@test.com', '12345678');
-    cy.request({
-      method: 'GET',
-      url: '/courses',
-    }).then((response) => {
-      expect(response.status).to.eq(302);
-    });
-  });
-
-  it('Sign out', () => {
-    cy.request({
-      method: 'GET',
-      url: '/signout',
-    }).then((response) => {
-      expect(response.status).to.eq(302);
-      cy.request({
-        method: 'GET',
-        url: '/login',
-      }).then((response) => {
-        expect(response.status).to.eq(200);
-      });
-    });
   });
 });
 
