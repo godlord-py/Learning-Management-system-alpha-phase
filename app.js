@@ -200,9 +200,7 @@ app.get("/logout", (request, response) => {
     response.redirect("/login");
   });
 
-app.listen(port, () => {
-  console.log("started");
-});
+
 //get student
 app.get(
   "/student",
