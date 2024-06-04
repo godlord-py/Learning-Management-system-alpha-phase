@@ -201,7 +201,7 @@ app.get("/logout", (request, response) => {
   });
 
 
-//get student
+//get student 
 app.get(
   "/student",
   connectEnsureLogin.ensureLoggedIn(), 
