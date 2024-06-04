@@ -200,7 +200,11 @@ app.get("/logout", (request, response) => {
     response.redirect("/login");
   });
 
-
+  if (process.env.NODE_ENV !== 'test') {
+    app.listen(port, () => {
+      console.log(`Server is listening on port ${port}`);
+    });
+  }
 //get student 
 app.get(
   "/student",
