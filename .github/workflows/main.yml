@@ -3,7 +3,7 @@ on: push
 env:
   PG_DATABASE: wd-todo-test
   PG_USER: postgres
-  PG_PASSWORD: 300678
+  PG_PASSWORD: Aayush@11
 jobs:
   # Label of the container job
   run-tests:
@@ -19,7 +19,7 @@ jobs:
         # Provide the password for postgres
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: 300678
+          POSTGRES_PASSWORD: Aayush@11
           POSTGRES_DB: wd-todo-test
         # Set health checks to wait until postgres has started
         options: >-
