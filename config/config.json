@@ -1,16 +1,16 @@
 {
   "development": {
     "username": "postgres",
-    "password": "300678",
+    "password": "Aayush@11",
     "database": "Capstone-dev",
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
-    "password":"300678",
+    "password":"Aayush@11",
     "database": "database_test",
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "postgres"
   },
   "production": {

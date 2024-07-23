@@ -8,5 +8,5 @@ module.exports = {
       "chromeWebSecurity": false,
       baseUrl: 'http://localhost:3000'
     },
-  }
+  } 
   
